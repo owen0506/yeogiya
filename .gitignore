@@ -1,0 +1,22 @@
+# Node / Expo
+node_modules/
+.expo/
+dist/
+web-build/
+
+# Env
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Java / Spring Boot
+backend/build/
+backend/.gradle/
+backend/out/
