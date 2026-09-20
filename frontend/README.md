@@ -1,56 +1,70 @@
-# Welcome to your Expo app 👋
+# 여기야 프런트엔드
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Expo SDK 57 · React Native · TypeScript. 추가 UI/지도 서비스 의존성 없이 웹·iOS·Android 공용 화면을 구성합니다.
 
-## Get started
+## 주요 파일
 
-1. Install dependencies
+- `src/features/journey/home-screen.tsx`: 반응형 홈, 노선 선택, 역 선택 창, 저장/최근 경로, 내 알림.
+- `src/features/journey/subway-map.tsx`: 확대·축소·가로 스크롤 가능한 간략 노선도.
+- `src/features/journey/route-service.ts`: 시간/환승 우선 경로 탐색, 지선 승강장 전환, 알림 시점 계산.
+- `src/features/journey/route-result-screen.tsx`: 경유역, 경로 저장, 알림 시작, 실시간 도착 조회.
+- `src/features/journey/journey-storage.ts`: 웹 저장 경로 검증 및 복원.
+- `src/features/stations/network.ts`: 노선 색상, 역 순서, 지선, 단방향 연결, 역명 별칭.
+- `src/features/notifications/`: 플랫폼별 알림, 카운트다운, 화면 전체 하차 안내창.
 
-   ```bash
-   npm install
-   ```
+## 로컬 노선망 범위
 
-2. Start the app
+이 목록 밖의 수도권 구간은 검색되지 않습니다. 노선별 항목 수는 환승역을 중복 포함합니다.
 
-   ```bash
-   npx expo start
-   ```
+| 노선 | 지원 구간 |
+| --- | --- |
+| 1 | 도봉산–금천구청, 구로–온수 |
+| 2 | 순환 본선, 성수–신설동, 신도림–까치산 |
+| 3 | 지축–오금 |
+| 4 | 불암산–남태령 |
+| 5 | 방화–강일, 강동–마천 |
+| 6 | 응암 순환(단방향), 응암–신내 |
+| 7 | 장암–온수 |
+| 8 | 암사–모란 |
+| 9 | 개화–중앙보훈병원, 일반열차만 |
+| 신분당 | 신사–청계산입구 |
 
-In the output, you'll find options to open the app in a
+역 ID는 앱 내부 식별자이며 공식 API 역 코드가 아닙니다. 기존 `mock-` ID는 호환성을 위해 유지합니다.
+환승역 이름 `총신대입구(이수)`/`이수`를 연결하고 `당고개`/`뚝섬유원지` 검색을 새 역명으로 연결합니다.
+2호선 지선은 성수·신도림에서 환승 5분을 적용하되 해당 역 자체에서 출발·도착할 때는 제외합니다.
+5호선 분기 간 이동처럼 열차 방면을 바꿔야 하는 경우 실제 대기 시간은 계산하지 않습니다.
+노선망은 수작업으로 관리하는 프로토타입 데이터이며, 운영 전 공식 노선 데이터로 교차 검증·교체해야 합니다.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 알림과 저장
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- 시간 기반 단일 알림. 도착 1·2·3개 역 전 예상 시점을 계산합니다.
+- 중복 예약 방지, 카운트다운, 취소, 종료, 웹 새로고침 후 예약 복원.
+- 만료되면 현재 탭/화면에 관계없이 하차 안내창을 표시합니다.
+- 웹의 화면 내 알림은 권한 없이 시작합니다. 브라우저 알림은 별도의 허용 버튼을 사용합니다.
+- 저장한 경로 최대 8개, 최근 경로 최대 4개. 웹은 `localStorage`, 네이티브는 현재 세션만 유지합니다.
+- 실시간 도착 조회는 수동 갱신하며 알림 시간과는 연결하지 않습니다.
 
-## Get a fresh project
+## 확인 명령
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+npm run web
+npm test
+npm run typecheck
+npx expo export --platform all
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 수동 확인
 
-### Other setup steps
+1. 강남 → 잠실 추천 경로: 12분, 이동 6개 역, 환승 0회.
+2. 검색 입력 변경 시 이전 역 선택이 해제되고 결과 선택 전까지 경로 버튼이 비활성화되는지 확인.
+3. 9호선 → 여의도 지도 선택 → 여기서 출발, 고속터미널 9호선 검색 → 경로 확인.
+4. 저장 후 새로고침 → 저장한 경로 복원 및 삭제.
+5. 1·2·3개 역 전 선택에 따라 예상 알림 시간이 변하는지 확인.
+6. 10초 체험 → 카운트다운 → 하차 안내창 → 종료. 다른 탭에서도 확인.
+7. 실제 시간 예약 → 내 알림 → 취소. API 실패 후에도 알림 예약 가능 여부 확인.
+8. 너비 390px와 1440px에서 입력, 스크롤, 노선도 선택, 알림창 확인.
+9. 실기기: 알림 권한 허용/거부, 소리, 백그라운드, 앱 재시작, 예약 취소 확인.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+참고: [Expo SDK 57 알림](https://docs.expo.dev/versions/v57.0.0/sdk/notifications/),
+[서울시 지하철 도착 정보](https://data.seoul.go.kr/dataList/OA-12764/F/1/datasetView.do),
+[불암산역 역명 안내](https://gil.seoul.go.kr/gil/view.do?key=2407100001&sc_gilNo=2).

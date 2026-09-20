@@ -1,7 +1,10 @@
+import { networkSegments, stationAliases } from './network';
+
 export type Station = {
   id: string;
   name: string;
   line: string;
+  branch?: boolean;
 };
 
 // UI 개발용 일부 역 데이터입니다. ID는 공식 API 역 코드가 아닙니다.
@@ -33,18 +36,26 @@ export const mockStations: readonly Station[] = [
   { id: 'mock-9-yeouido', name: '여의도', line: '9호선' },
 ];
 
+// 기존 저장값과 테스트 ID를 유지하면서 검색 가능한 역을 연결망 전체로 확장합니다.
+export const stations: readonly Station[] = [...new Map(networkSegments.flatMap((segment) => segment.names.map((name) => {
+  const station = mockStations.find((item) => item.name === name && item.line === segment.line)
+    ?? { id: `seoul-${segment.line}-${name}`, name, line: segment.line };
+  return [station.id, station] as const;
+}))).values()];
+
 function normalize(value: string) {
   return value.normalize('NFC').replace(/\s/g, '').toLowerCase();
 }
 
-export function searchStations(query: string): readonly Station[] {
+export function searchStations(query: string, line?: string): readonly Station[] {
   const normalized = normalize(query);
   if (!normalized) return [];
   // '역삼' 같은 실제 역명은 유지하면서 '강남역' 검색도 지원합니다.
-  const term = normalized.length > 1 && normalized.endsWith('역')
+  const rawTerm = normalized.length > 1 && normalized.endsWith('역')
     ? normalized.slice(0, -1)
     : normalized;
-  return mockStations.filter((station) => normalize(station.name).includes(term));
+  const term = stationAliases[rawTerm] ?? rawTerm;
+  return stations.filter((station) => (!line || station.line === line) && normalize(station.name).includes(term));
 }
 
 export type StationFieldValue = { query: string; station: Station | null };

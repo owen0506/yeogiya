@@ -1,65 +1,36 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-
+import { LineBadge, palette, ui } from '../journey/journey-ui';
 import { searchStations, type StationFieldValue } from './stations';
 
-type Props = {
-  label: string;
-  value: StationFieldValue;
-  active: boolean;
-  onFocus: () => void;
-  onChange: (value: StationFieldValue) => void;
-  onSelect: () => void;
-};
+type Props = { label: string; value: StationFieldValue; active: boolean; onFocus: () => void; onChange: (value: StationFieldValue) => void; onSelect: () => void };
 
 export function StationSearchField({ label, value, active, onFocus, onChange, onSelect }: Props) {
   const results = active && !value.station ? searchStations(value.query) : [];
-  return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput
-        accessibilityLabel={`${label} 검색`}
-        value={value.query}
-        onFocus={onFocus}
-        onChangeText={(query) => onChange({ query, station: null })}
-        placeholder="역 이름 검색 (예: 강남, 서울역)"
-        placeholderTextColor="#566B7C"
-        autoCorrect={false}
-        maxLength={50}
-        style={styles.input}
-      />
-      {value.query.length > 0 && (
-        <Pressable accessibilityRole="button" accessibilityLabel={`${label} 지우기`} onPress={() => onChange({ query: '', station: null })} style={styles.clear}>
-          <Text style={styles.help}>지우기</Text>
-        </Pressable>
-      )}
-      {value.station ? (
-        <Text accessibilityLiveRegion="polite" style={styles.selection}>선택됨: {value.station.name} · {value.station.line}</Text>
-      ) : active ? (
-        <View style={styles.results}>
-          <Text accessibilityLiveRegion="polite" style={styles.help}>
-            {!value.query.trim() ? '역 이름을 입력한 뒤 검색 결과를 선택하세요.' : results.length === 0 ? '검색 결과가 없습니다. 더미 데이터에 포함된 역만 검색할 수 있어요.' : `검색 결과 ${results.length}개 · 노선을 확인하고 선택하세요.`}
-          </Text>
-          {results.map((station) => (
-            <Pressable key={station.id} accessibilityRole="button" accessibilityLabel={`${label}으로 ${station.name} ${station.line} 선택`} onPress={() => { onChange({ query: station.name, station }); onSelect(); }} style={({ pressed }) => [styles.result, pressed && styles.pressed]}>
-              <Text style={styles.label}>{station.name}</Text>
-              <Text style={styles.line}>{station.line}</Text>
-            </Pressable>
-          ))}
-        </View>
-      ) : value.query.trim() ? <Text style={styles.help}>검색 결과에서 역을 선택해주세요.</Text> : null}
+  const destination = label === '도착역';
+  return <View style={{ gap: 8 }}>
+    <View style={[styles.field, active && { borderColor: palette.green, backgroundColor: '#FFF' }]}>
+      <View style={[styles.dot, destination && { backgroundColor: palette.green }]} />
+      <View style={{ flex: 1, gap: 3 }}>
+        <Text style={styles.label}>{destination ? '내릴 역' : '출발역'}</Text>
+        <TextInput accessibilityLabel={`${label} 검색`} value={value.query} onFocus={onFocus} onChangeText={(query) => onChange({ query, station: null })} placeholder={destination ? '어디에서 내리시나요?' : '어디에서 출발하시나요?'} placeholderTextColor="#9AA49E" autoCorrect={false} maxLength={50} style={styles.input} />
+      </View>
+      {value.station && <LineBadge line={value.station.line} small />}
+      {!!value.query && <Pressable accessibilityRole="button" accessibilityLabel={`${label} 지우기`} onPress={() => { onChange({ query: '', station: null }); onFocus(); }} style={styles.clear}><Text style={{ fontSize: 19, color: '#9AA49E' }}>×</Text></Pressable>}
     </View>
-  );
+    {active && !value.station && !!value.query.trim() && <View style={styles.results}>
+      <Text accessibilityLiveRegion="polite" style={ui.muted}>{results.length ? '노선을 확인하고 역을 선택해주세요' : '검색 결과가 없어요. 다른 이름을 입력해보세요.'}</Text>
+      {results.slice(0, 10).map((station) => <Pressable key={station.id} accessibilityRole="button" accessibilityLabel={`${label}으로 ${station.name} ${station.line} 선택`} onPress={() => { onChange({ query: station.name, station }); onSelect(); }} style={({ pressed }) => [styles.result, pressed && { backgroundColor: palette.tint }]}><Text style={ui.text}>{station.name}</Text><LineBadge line={station.line} /></Pressable>)}
+      {results.length > 10 && <Text style={ui.muted}>역 이름을 더 입력하면 검색 범위를 좁힐 수 있어요.</Text>}
+    </View>}
+  </View>;
 }
 
 const styles = StyleSheet.create({
-  container: { gap: 10 },
-  label: { fontSize: 16, fontWeight: '600', color: '#172D40' },
-  input: { borderWidth: 1, borderColor: '#D9E2E8', borderRadius: 12, padding: 16, fontSize: 16, color: '#172D40', backgroundColor: '#F4F7FA' },
-  clear: { alignSelf: 'flex-end', minHeight: 44, justifyContent: 'center', paddingHorizontal: 12 },
-  help: { fontSize: 13, lineHeight: 21, color: '#566B7C' },
-  selection: { fontSize: 14, color: '#116B55', lineHeight: 22 },
-  results: { gap: 8 },
-  result: { minHeight: 48, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 8, padding: 12, borderWidth: 1, borderColor: '#D9E2E8', borderRadius: 10 },
-  line: { fontSize: 13, color: '#116B55', backgroundColor: '#E8F4EF', padding: 6, borderRadius: 6 },
-  pressed: { backgroundColor: '#E8F4EF' },
+  field: { minHeight: 70, paddingLeft: 15, paddingRight: 5, borderWidth: 1, borderColor: '#EDF0ED', backgroundColor: '#F7F9F7', borderRadius: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  dot: { width: 10, height: 10, borderRadius: 5, borderWidth: 2, borderColor: palette.green },
+  label: { fontSize: 10, fontWeight: '600', color: palette.muted },
+  input: { fontSize: 16, color: palette.ink, fontWeight: '600', paddingVertical: 2, paddingHorizontal: 0, minWidth: 0 },
+  clear: { minWidth: 36, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  results: { borderWidth: 1, borderColor: palette.border, borderRadius: 12, padding: 12, backgroundColor: '#FFF', gap: 4 },
+  result: { minHeight: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6, borderBottomWidth: 1, borderBottomColor: '#F0F3F0' },
 });

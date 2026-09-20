@@ -5,10 +5,8 @@ let notification: Notification | undefined;
 const storageKey = 'subway-alarm-active';
 
 export async function requestAlarmPermission() {
-  // 브라우저 알림이 차단되어도 화면 내 체험 알림은 제공합니다.
-  if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
-    try { await Notification.requestPermission(); } catch { /* 화면 내 알림으로 진행 */ }
-  }
+  // 화면 내 알림은 권한 없이 시작합니다. 브라우저 알림 권한은 별도 버튼에서
+  // 요청하여 권한 창에 응답하지 않아도 예약이 무기한 멈추지 않게 합니다.
 }
 
 export async function scheduleAlarm(alarm: Alarm) {

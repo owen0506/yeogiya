@@ -10,7 +10,7 @@ export type Arrival = {
 
 export const lineIds: Record<string, string> = {
   '1호선': '1001', '2호선': '1002', '3호선': '1003', '4호선': '1004',
-  '5호선': '1005', '7호선': '1007', '8호선': '1008', '9호선': '1009', '신분당선': '1077',
+  '5호선': '1005', '6호선': '1006', '7호선': '1007', '8호선': '1008', '9호선': '1009', '신분당선': '1077',
 };
 
 export function parseArrivals(payload: unknown, line: string, now = Date.now()): Arrival[] {

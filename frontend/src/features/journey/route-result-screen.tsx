@@ -1,101 +1,73 @@
 import { useEffect, useState } from 'react';
-import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { getArrivals, type Arrival } from '../../services/seoul-subway';
-import { AlarmStatus } from '../notifications/alarm-status';
 import { useAlarm } from '../notifications/use-alarm';
+import { BrowserNotificationPermission } from '../notifications/browser-notification-permission';
+import { lineColor } from '../stations/network';
 import { alarmDelaySeconds, type JourneyRoute } from './route-service';
+import { Action, LineBadge, palette, ui } from './journey-ui';
 
-type Props = { route: JourneyRoute; stopsBefore: number; onBack: () => void };
+type Props = { route: JourneyRoute; stopsBefore: number; saved: boolean; onSave: () => void; preference: 'fastest' | 'fewest-transfers'; onPreference: (value: 'fastest' | 'fewest-transfers') => void };
 
-export function RouteResultScreen({ route, stopsBefore, onBack }: Props) {
-  const first = route.steps[0].station;
-  const last = route.steps[route.steps.length - 1].station;
+export function RouteResultScreen({ route, stopsBefore, saved, onSave, preference, onPreference }: Props) {
+  const first = route.steps[0].station, last = route.steps[route.steps.length - 1].station;
+  const [expanded, setExpanded] = useState(false);
   const [arrivals, setArrivals] = useState<Arrival[]>([]);
-  const [liveMessage, setLiveMessage] = useState('실시간 정보를 확인하고 있습니다…');
+  const [liveMessage, setLiveMessage] = useState('출발역에 오는 열차를 확인할 수 있어요.');
   const [refresh, setRefresh] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const alarm = useAlarm();
   const delay = alarmDelaySeconds(route, stopsBefore);
   const disabled = alarm.busy || alarm.status === 'active' || route.stops === 0;
+  const visibleSteps = route.steps.filter((step, index) => expanded || index === 0 || index === route.steps.length - 1 || step.transfer || route.steps[index + 1]?.transfer);
+  const lines = route.steps.filter((step, index) => index === 0 || step.transfer).map((step) => step.station.line);
+  const nextStop = route.steps.find((step, index) => index > 0 && !step.transfer)?.station.name;
 
   useEffect(() => {
+    setArrivals([]);
+    if (!refresh) { setLiveMessage('출발역에 오는 열차를 확인할 수 있어요.'); return; }
     let disposed = false;
     const controller = new AbortController();
-    setLoading(true);
-    setArrivals([]);
-    setLiveMessage('실시간 정보를 확인하고 있습니다…');
+    setLoading(true); setLiveMessage('도착 정보를 확인하고 있어요…');
     getArrivals(first.name, first.line, controller.signal).then((items) => {
       if (disposed) return;
       setArrivals(items);
-      setLiveMessage(items.length ? '출발역 도착 정보 · 방면을 확인하세요' : '최근 3분 이내의 도착 정보가 없습니다. 예상 시간 알림은 사용할 수 있어요.');
-    }).catch((error: unknown) => {
-      if (!disposed) setLiveMessage(error instanceof Error ? error.message : '실시간 정보를 가져오지 못했습니다.');
+      setLiveMessage(items.length ? '탑승 전 열차의 방면을 확인해주세요.' : '최근 도착 정보가 없어요. 잠시 후 다시 확인해주세요.');
+    }).catch(() => {
+      if (!disposed) setLiveMessage('지금은 도착 정보를 불러올 수 없어요. 예상 시간 알림은 사용할 수 있어요.');
     }).finally(() => { if (!disposed) setLoading(false); });
     return () => { disposed = true; controller.abort(); };
   }, [first.name, first.line, refresh]);
 
-  return (
-    <SafeAreaView style={styles.page}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <Pressable accessibilityRole="button" onPress={onBack} style={styles.secondary}><Text style={styles.green}>← 역 다시 선택</Text></Pressable>
-        <Text accessibilityRole="header" style={styles.title}>경로 결과</Text>
-        <Text style={styles.label}>{first.name} → {last.name}</Text>
-        <View style={styles.card}>
-          <Text style={styles.title}>약 {Math.ceil(route.seconds / 60)}분</Text>
-          <Text style={styles.label}>{route.stops}개 역 이동 · 환승 {route.transfers}회</Text>
-          <Text style={styles.help}>데모 부분 노선망의 예상 경로입니다. 역간 2분·환승 5분으로 계산하며 실제 최단 경로와 운행 시간을 보장하지 않습니다.</Text>
-          {route.steps.map((step, index) => (
-            <View key={step.station.id} style={styles.step}>
-              <Text style={styles.label}>{index === 0 ? '출발' : index === route.steps.length - 1 ? '도착' : step.transfer ? '환승' : '경유'} · {step.station.name}</Text>
-              <Text style={styles.help}>{step.station.line} · {Math.ceil(step.secondsFromStart / 60)}분{step.transfer ? ' · 노선 변경' : ''}</Text>
-            </View>
-          ))}
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.label}>실시간 도착 정보</Text>
-          <Text accessibilityLiveRegion="polite" style={styles.help}>{liveMessage}</Text>
-          {arrivals.slice(0, 6).map((arrival, index) => (
-            <View key={`${arrival.trainId}-${index}`} style={styles.step}>
-              <Text style={styles.label}>{arrival.destination} · {arrival.direction}</Text>
-              <Text style={styles.help}>{arrival.message}{arrival.seconds !== null ? ` · 약 ${Math.ceil(arrival.seconds / 60)}분` : ''}</Text>
-              <Text style={styles.help}>정보 생성: {arrival.receivedAt}</Text>
-            </View>
-          ))}
-          <Pressable accessibilityRole="button" disabled={loading} onPress={() => setRefresh((value) => value + 1)} style={styles.secondary}>
-            <Text style={styles.green}>{loading ? '조회 중…' : '실시간 정보 새로고침'}</Text>
-          </Pressable>
-          <Text style={styles.help}>출처: 서울특별시 TOPIS. 도착 정보는 참고용이며 탑승 열차를 자동 추적하지 않습니다.</Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.label}>도착 {stopsBefore}개 역 전 알림</Text>
-          <Text style={styles.help}>탑승 후 시작해주세요. 시작 후 {delay <= 1 ? '즉시' : `약 ${Math.ceil(delay / 60)}분 뒤`} 예상 시간으로 알려드립니다. 지연·대기 시간은 반영되지 않습니다.</Text>
-          {route.stops === 0 && <Text style={styles.help}>역간 이동이 없는 경로는 하차 알림을 시작할 수 없습니다.</Text>}
-          {Platform.OS === 'web' && <Text style={styles.help}>웹에서는 화면 내 알림을 표시합니다. 브라우저 권한을 허용하면 데스크톱 알림도 시도합니다.</Text>}
-          <Pressable accessibilityRole="button" accessibilityState={{ disabled }} disabled={disabled} onPress={() => void alarm.start(last.name, delay, false)} style={[styles.primary, disabled && styles.disabled]}>
-            <Text style={styles.white}>{alarm.busy ? '처리 중…' : alarm.status === 'active' ? '기존 알림을 먼저 종료해주세요' : '탑승 완료 · 예상 시간 알림 시작'}</Text>
-          </Pressable>
-          <Pressable accessibilityRole="button" disabled={disabled} onPress={() => void alarm.start(last.name, 10, true)} style={[styles.secondary, disabled && styles.disabled]}>
-            <Text style={styles.green}>10초 체험 알림</Text>
-          </Pressable>
-        </View>
-        <AlarmStatus />
-      </ScrollView>
-    </SafeAreaView>
-  );
+  return <View style={{ gap: 18 }}>
+    <View style={[ui.card, { gap: 18 }]}>
+      <View style={ui.spread}><View style={styles.preferences}>{([['fastest', '빠른 경로'], ['fewest-transfers', '최소 환승']] as const).map(([value, label]) => <Pressable key={value} accessibilityRole="radio" accessibilityState={{ checked: preference === value }} aria-checked={preference === value} onPress={() => onPreference(value)} style={[styles.preference, preference === value && { backgroundColor: '#FFF', boxShadow: '0 1px 4px #1C382515' }]}><Text style={{ fontSize: 11, color: preference === value ? palette.green : palette.muted, fontWeight: '600' }}>{label}</Text></Pressable>)}</View><Pressable accessibilityRole="button" accessibilityLabel={saved ? '경로 저장 해제' : '경로 저장'} accessibilityState={{ selected: saved }} aria-pressed={saved} onPress={onSave} style={styles.save}><Text style={{ fontSize: 25, color: saved ? '#C69D48' : '#9BA79E' }}>{saved ? '★' : '☆'}</Text></Pressable></View>
+      <View style={ui.spread}><Text style={{ fontSize: 32, color: palette.ink, fontWeight: '800', letterSpacing: -1 }}>{Math.ceil(route.seconds / 60)}<Text style={{ fontSize: 17, fontWeight: '600' }}>분</Text><Text style={[ui.muted, { fontSize: 11 }]}>　예상</Text></Text><Text style={ui.muted}>{route.stops}개 역 · 환승 {route.transfers}회</Text></View>
+      <View style={styles.routeBar}>{lines.map((line, index) => <View key={`${line}-${index}`} style={{ flex: 1, height: 7, borderRadius: 4, backgroundColor: lineColor(line) }} />)}</View>
+      <View style={{ gap: 0 }}>{visibleSteps.map((step, index) => <View key={step.station.id} style={styles.step}><View style={styles.rail}><View style={[styles.railDot, { borderColor: lineColor(step.station.line) }]} />{index < visibleSteps.length - 1 && <View style={[styles.railLine, { backgroundColor: lineColor(step.station.line) }]} />}</View><View style={{ flex: 1, gap: 4, paddingBottom: 18 }}><View style={ui.spread}><Text style={[ui.text, { fontWeight: '600' }]}>{step.station.name}</Text><Text style={ui.muted}>{index === 0 ? '출발' : index === visibleSteps.length - 1 ? '하차' : step.transfer ? '환승' : '경유'}</Text></View><View style={ui.row}><LineBadge line={step.station.line} small /><Text style={[ui.muted, { fontSize: 10 }]}>{index === 0 ? `${nextStop ?? last.name} 방면` : `출발 후 약 ${Math.ceil(step.secondsFromStart / 60)}분`}</Text></View></View></View>)}</View>
+      <Pressable accessibilityRole="button" accessibilityState={{ expanded }} aria-expanded={expanded} onPress={() => setExpanded(!expanded)} style={styles.expand}><Text style={{ color: '#688373', fontSize: 12 }}>{expanded ? '경유역 접기　⌃' : `전체 ${route.stops}개 이동 구간 보기　⌄`}</Text></Pressable>
+      <Text style={[ui.muted, { fontSize: 10 }]}>일반열차 기준 · 역간 2분, 환승 5분 예상{ '\n' }열차 대기·지연 시간은 포함하지 않아요.</Text>
+    </View>
+    <View style={[ui.card, { backgroundColor: '#F0F7F0', borderColor: '#DAE9D9' }]}>
+      <Text style={[ui.heading, { fontSize: 16 }]}>내릴 준비는 {stopsBefore}개 역 전에</Text>
+      <Text style={ui.muted}>탑승 후 시작하면 {delay <= 1 ? '바로' : `약 ${Math.ceil(delay / 60)}분 뒤`} 알려드려요.{route.transfers ? '\n환승 대기 시간에 따라 실제 도착과 차이가 날 수 있어요.' : ''}</Text>
+      <Action disabled={disabled} onPress={() => void alarm.start(last.name, delay, false)}>{alarm.busy ? '알림을 준비하고 있어요…' : alarm.status === 'active' ? '하차 알림이 켜져 있어요' : '탑승했어요 · 알림 시작'}</Action>
+      <Pressable accessibilityRole="button" disabled={disabled} accessibilityState={{ disabled }} onPress={() => void alarm.start(last.name, 10, true)} style={{ alignItems: 'center', minHeight: 36, justifyContent: 'center', opacity: disabled ? .4 : 1 }}><Text style={{ color: '#598068', fontSize: 12 }}>먼저 10초 체험해보기　↗</Text></Pressable>
+      <BrowserNotificationPermission />
+    </View>
+    <View style={ui.card}><View style={ui.spread}><Text style={[ui.heading, { fontSize: 14 }]}>출발역 실시간 도착</Text><Text style={ui.muted}>서울시 TOPIS</Text></View><Text accessibilityLiveRegion="polite" style={ui.muted}>{liveMessage}</Text>{arrivals.slice(0, 4).map((item, index) => <View key={`${item.trainId}-${index}`} style={styles.arrival}><Text style={[ui.text, { fontSize: 12, fontWeight: '600' }]}>{item.destination} · {item.direction}</Text><Text style={ui.muted}>{item.message}{item.seconds !== null ? ` · 약 ${Math.ceil(item.seconds / 60)}분` : ''}</Text><Text style={[ui.muted, { fontSize: 10 }]}>{item.receivedAt} 기준</Text></View>)}<Action secondary disabled={loading} onPress={() => setRefresh((value) => value + 1)}>{loading ? '확인 중…' : refresh ? '도착 정보 새로고침' : '실시간 도착 확인'}</Action><Text style={[ui.muted, { fontSize: 10 }]}>도착 정보는 참고용이며 하차 알림 시간에 자동 반영되지 않아요.</Text></View>
+  </View>;
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#F4F7FA' },
-  content: { width: '100%', maxWidth: 560, alignSelf: 'center', padding: 24, gap: 20, paddingBottom: 40 },
-  title: { fontSize: 28, fontWeight: '700', color: '#172D40' },
-  label: { fontSize: 16, fontWeight: '600', color: '#172D40', lineHeight: 24 },
-  help: { fontSize: 13, lineHeight: 21, color: '#566B7C' },
-  card: { padding: 22, backgroundColor: '#FFFFFF', borderRadius: 20, gap: 14 },
-  step: { borderLeftWidth: 3, borderLeftColor: '#116B55', paddingLeft: 14, paddingVertical: 5, gap: 5 },
-  primary: { padding: 16, minHeight: 48, borderRadius: 12, backgroundColor: '#116B55', alignItems: 'center' },
-  secondary: { padding: 14, minHeight: 48, borderRadius: 12, backgroundColor: '#E8F4EF', alignItems: 'center' },
-  green: { color: '#116B55', fontWeight: '600' },
-  white: { color: '#FFFFFF', fontWeight: '600' },
-  disabled: { opacity: 0.5 },
+  preferences: { flexDirection: 'row', backgroundColor: '#F3F6F2', borderRadius: 9, padding: 4, gap: 2 },
+  preference: { paddingHorizontal: 11, minHeight: 34, justifyContent: 'center', borderRadius: 7 },
+  save: { minWidth: 36, minHeight: 40, alignItems: 'center', justifyContent: 'center' },
+  routeBar: { flexDirection: 'row', gap: 5 },
+  step: { flexDirection: 'row', gap: 12 },
+  rail: { width: 14, alignItems: 'center', paddingTop: 5 },
+  railDot: { width: 12, height: 12, borderWidth: 3, borderRadius: 6, backgroundColor: '#FFF' },
+  railLine: { flex: 1, width: 2, marginVertical: 3, opacity: .25 },
+  expand: { borderTopWidth: 1, borderTopColor: palette.border, alignItems: 'center', paddingTop: 13, minHeight: 38 },
+  arrival: { borderLeftWidth: 2, borderLeftColor: '#C3D6C7', paddingLeft: 10, gap: 4 },
 });
