@@ -1,0 +1,56 @@
+{
+  "capturedAt": "2026-09-24T11:01:39.763Z",
+  "operation": "getRouteAcctoThrghSttnList",
+  "query": {
+    "cityCode": 23,
+    "routeId": "ICB161000002",
+    "numOfRows": 3
+  },
+  "raw": {
+    "response": {
+      "header": {
+        "resultCode": "00",
+        "resultMsg": "NORMAL SERVICE."
+      },
+      "body": {
+        "items": {
+          "item": [
+            {
+              "gpslati": 37.423189,
+              "gpslong": 126.605516,
+              "nodeid": "ICB164000654",
+              "nodenm": "인천항신국제여객터미널(송도방향)",
+              "nodeno": 38652,
+              "nodeord": 1,
+              "routeid": "ICB161000002",
+              "updowncd": 0
+            },
+            {
+              "gpslati": 37.414486,
+              "gpslong": 126.614215,
+              "nodeid": "ICB164000656",
+              "nodenm": "미송초등학교",
+              "nodeno": 38654,
+              "nodeord": 2,
+              "routeid": "ICB161000002",
+              "updowncd": 0
+            },
+            {
+              "gpslati": 37.412933,
+              "gpslong": 126.615747,
+              "nodeid": "ICB164000626",
+              "nodenm": "e편한세상 정문",
+              "nodeno": 38624,
+              "nodeord": 3,
+              "routeid": "ICB161000002",
+              "updowncd": 0
+            }
+          ]
+        },
+        "numOfRows": 3,
+        "pageNo": 1,
+        "totalCount": 30
+      }
+    }
+  }
+}

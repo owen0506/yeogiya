@@ -1,0 +1,326 @@
+{
+  "searchedAt": "2026-09-24T00:00:00.000Z",
+  "fetchedAt": "2026-09-24T00:00:01.000Z",
+  "source": "seoul-metro",
+  "body": {
+    "searchType": "duration",
+    "totalDstc": 17100,
+    "totalReqHr": 1590,
+    "totalCardCrg": 0,
+    "trsitNmtm": 0,
+    "trfstnNms": [],
+    "exclTrfstns": [],
+    "thrghStns": [],
+    "schInclYn": "Y",
+    "paths": [
+      {
+        "dptreStn": {
+          "stnCd": "1458",
+          "stnNo": "443",
+          "stnNm": "금정",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1457",
+          "stnNo": "442",
+          "stnNm": "범계",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 2600,
+        "reqHr": 180,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:03:00",
+        "trainArvlTm": "09:06:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1457",
+          "stnNo": "442",
+          "stnNm": "범계",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1456",
+          "stnNo": "441",
+          "stnNm": "평촌",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1300,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:06:30",
+        "trainArvlTm": "09:08:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1456",
+          "stnNo": "441",
+          "stnNm": "평촌",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1455",
+          "stnNo": "440",
+          "stnNm": "인덕원",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1600,
+        "reqHr": 120,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:08:30",
+        "trainArvlTm": "09:10:30",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1455",
+          "stnNo": "440",
+          "stnNm": "인덕원",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1454",
+          "stnNo": "439",
+          "stnNm": "정부과천청사",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 3000,
+        "reqHr": 180,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:11:00",
+        "trainArvlTm": "09:14:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1454",
+          "stnNo": "439",
+          "stnNm": "정부과천청사",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1453",
+          "stnNo": "438",
+          "stnNm": "과천",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1000,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:14:30",
+        "trainArvlTm": "09:16:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1453",
+          "stnNo": "438",
+          "stnNm": "과천",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1452",
+          "stnNo": "437",
+          "stnNm": "대공원",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1000,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:16:30",
+        "trainArvlTm": "09:18:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1452",
+          "stnNo": "437",
+          "stnNm": "대공원",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1451",
+          "stnNo": "436",
+          "stnNm": "경마공원",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 900,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:18:30",
+        "trainArvlTm": "09:20:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1451",
+          "stnNo": "436",
+          "stnNm": "경마공원",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1450",
+          "stnNo": "435",
+          "stnNm": "선바위",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1000,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:20:30",
+        "trainArvlTm": "09:22:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1450",
+          "stnNo": "435",
+          "stnNm": "선바위",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0434",
+          "stnNo": "434",
+          "stnNm": "남태령",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 2000,
+        "reqHr": 150,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:22:30",
+        "trainArvlTm": "09:25:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0434",
+          "stnNo": "434",
+          "stnNm": "남태령",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0433",
+          "stnNo": "433",
+          "stnNm": "사당",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1600,
+        "reqHr": 120,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:25:30",
+        "trainArvlTm": "09:27:30",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0433",
+          "stnNo": "433",
+          "stnNm": "사당",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0432",
+          "stnNo": "432",
+          "stnNm": "총신대입구",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1100,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4544",
+        "trainDptreTm": "09:28:00",
+        "trainArvlTm": "09:29:30",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      }
+    ]
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "capturedAt": "2026-09-25T03:07:26.412Z",
+  "lookups": [
+    {
+      "service": "routeMaster",
+      "matchField": "routeId",
+      "reason": "targets-found",
+      "pagination": "undetermined",
+      "requestCount": 1,
+      "matches": [
+        {
+          "value": "100100252",
+          "raw": {
+            "routeId": "100100252",
+            "routeNm": "5515",
+            "routeTy": "지선",
+            "dstnc": "10.8"
+          },
+          "query": {
+            "startRow": 1,
+            "rowCnt": 1000
+          },
+          "requestNumber": 1
+        }
+      ],
+      "missing": [],
+      "requests": [
+        {
+          "startRow": 1,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "81b8f788235ca41e0825d097702f4235aa93e0e0417232f0ae9f9bddfcc19708"
+        }
+      ]
+    },
+    {
+      "service": "stopMaster",
+      "matchField": "sttnId",
+      "reason": "targets-found",
+      "pagination": "offset",
+      "requestCount": 27,
+      "matches": [
+        {
+          "value": "120000670",
+          "raw": {
+            "sttnId": "120000670",
+            "sttnNm": "서울대학교",
+            "sttnTy": "일반차로",
+            "bitInstlAt": "설치",
+            "crdntX": "126.949631903",
+            "crdntY": "37.4676609636",
+            "sttnNo": "21376"
+          },
+          "query": {
+            "startRow": 22002,
+            "rowCnt": 1000
+          },
+          "requestNumber": 24
+        },
+        {
+          "value": "120000041",
+          "raw": {
+            "sttnId": "120000041",
+            "sttnNm": "신림중.삼성고.관악아트홀·도서관",
+            "sttnTy": "일반차로",
+            "bitInstlAt": "설치",
+            "crdntX": "126.944412",
+            "crdntY": "37.470352",
+            "sttnNo": "21142"
+          },
+          "query": {
+            "startRow": 25002,
+            "rowCnt": 1000
+          },
+          "requestNumber": 27
+        }
+      ],
+      "missing": [],
+      "requests": [
+        {
+          "startRow": 1,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "63c3af2c40bb3712d465a9e5f9fe8c0514db918d4c0ac828ed951ceccc347157"
+        },
+        {
+          "startRow": 2,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "e351402c8a089d7435457fbd0028dd7e35756f1b644ff31af7ff7c7804f25c2a",
+          "overlapWithPrevious": 999
+        },
+        {
+          "startRow": 1002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "86937376c1e6321b3dd0bcadef8fe5158b2b45887a0485cf1c24303d1760a927",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 2002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "869698ab4dc77ec9bf20b8fac04a400bb000c28d76cf936356ac7be420a2bc78",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 3002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "a55f1f1ab663e03305941817700ecf33eff4a6b4c28c91323c3ee73ffad04407",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 4002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "a06ddf0ec8168717e7790343030a944b85f91e1501dffa12bf54e81fd63fe2e6",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 5002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "bbea1f4f2ff55c9bf3ad08da2785c4a9eb74f6bcc0984fb22d085cefe3d7eb62",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 6002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "66bb1a2fcf56f42dc95261a03b077cd25a46c4cf29bdcf22dacf2b4270eb04a1",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 7002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "16b3b8d476a02b17bbce680c5ad6e6754cec1e2274d0b9afdb62e614aedcba28",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 8002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "ddc069ac2112c6864eb1a888d9ce9ce2db236765756a3f8435b24d5a2f0e5e90",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 9002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "4c108ce23223d4d38884bd682f85a937313c55b0d4f83e7e4d9497cd9470fb24",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 10002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "97e0317081223a39de8b38768dc372251ef5ce2469d653d7aa7fa339e3fae134",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 11002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "5c4eaed1092900bf0910aeef9e03a8215c7c075e8da2081dd47580a24e848d07",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 12002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "0c5f3d52d77fcee5386f5eca1f11996b8d2916e318ba458095d1206fbf5f28f3",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 13002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "f109a28f5f1991f435dfbbb01c0f2975bc9fe083a568140286b4daa2ef6dd4a5",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 14002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "a79a4f50e88141607c77976b890f34b24cf4a561278b3915d217b3627bec0ab9",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 15002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "18a895c31d8e359141dcd4b939d8633fce1fdd010e012612086e443093f0fca4",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 16002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "c16476c7c1c0345ab0fe2297ab781fd15af8a3143436a8c7653740e1b018ec78",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 17002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "321f763606fbaa0d71a04cbed103aa4ca08a85f7d6bcab175196b169895ae302",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 18002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "79faefcd71a60155aae6eaf2a51acb31bec9fb92920f1ae38240f51a64d5e289",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 19002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "8c25be1171ed48efb6ac0afa778ba385bd91d21e6c3e4dd82836e1b469fa73a4",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 20002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "7d8a768be371d3fb079af097e7c4f0479de483a7a9fb979e1015505709e45f64",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 21002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "7b81f97feb6f145bfab164100e07293fbb758f158ddcb1fcdf43933164170e31",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 22002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "47c41d239f6362d326159e8e1527090b1bf72140ae4c0a911bb1a2fd0975e95d",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 23002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "304ee8468e55182c55b9cc396b4750df51d560ae7d3c38b8b490263c019ffa51",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 24002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "0c1a1b8ad4ab2f8ba270bdacd1410e6b89a1d03ef6b524c317fc008ea78ee79a",
+          "overlapWithPrevious": 0
+        },
+        {
+          "startRow": 25002,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "c27e0b7ca1fe5570a923257917eaadad641c837dcbfc9d32e8c6d874dc28aa77",
+          "overlapWithPrevious": 0
+        }
+      ]
+    },
+    {
+      "service": "bisRouteInfo",
+      "matchField": "routeNm",
+      "reason": "targets-found",
+      "pagination": "undetermined",
+      "requestCount": 1,
+      "matches": [
+        {
+          "value": "5515",
+          "raw": {
+            "routeId": "100100252",
+            "mummCaralc": "5",
+            "mxmmCaralc": "12",
+            "useAt": "1",
+            "routeNm": "5515",
+            "histId": "0",
+            "routeTy": "4",
+            "caralc": "9",
+            "fircarTm": "0.0530",
+            "lstcarTm": "0.2330",
+            "dstnc": "10.8",
+            "chrge": "900.0",
+            "routeDc": "-",
+            "opratAt": "1",
+            "cuvtPt": "1.512",
+            "gnrlFircarDt": "20150717000000",
+            "todayLstcarDt": "20150717000000",
+            "gnrlLstcarAt": "0",
+            "lstcarVehId": "0",
+            "wbusFircarDt": "-",
+            "wbusLstcarAt": "-",
+            "routeAbrv": "5515",
+            "opratenTime": "..    ",
+            "opratenUse": "0",
+            "opratStle": "0",
+            "topVe": "0",
+            "lwetVe": "0",
+            "avrgVe": "0",
+            "seatDspAt": "1",
+            "opratReqreTm": "60",
+            "esttnWaitTm": "0",
+            "cnfmCo": "5",
+            "preparVehCo": "0",
+            "routePid": "0",
+            "arvlTy": "1",
+            "ssttnNm": "금호타운아파트",
+            "esttnNm": "청림동현대아파트",
+            "caralcS": "10",
+            "caralcH": "10",
+            "fircarStm": "0.0530",
+            "fircarHtm": "0.0530",
+            "lstcarStm": "0.2330",
+            "lstcarHtm": "0.2330",
+            "areaId": "523"
+          },
+          "query": {
+            "startRow": 1,
+            "rowCnt": 1000
+          },
+          "requestNumber": 1
+        }
+      ],
+      "missing": [],
+      "requests": [
+        {
+          "startRow": 1,
+          "rowCnt": 1000,
+          "returned": 1000,
+          "fingerprint": "ec55d5b61e262efd8aecc160c838c8c82c77db7bc60abfee9ba5a9417c63e66b"
+        }
+      ]
+    }
+  ],
+  "bisFilters": [
+    {
+      "query": {
+        "route_id": "100100252",
+        "rowCnt": 3,
+        "startRow": 1
+      },
+      "status": "ignored",
+      "error": "T_DATA_FILTER_MISMATCH"
+    },
+    {
+      "query": {
+        "route_nm": "5515",
+        "rowCnt": 3,
+        "startRow": 1
+      },
+      "status": "ignored",
+      "error": "T_DATA_FILTER_MISMATCH"
+    }
+  ]
+}

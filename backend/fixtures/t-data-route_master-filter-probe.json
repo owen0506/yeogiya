@@ -1,0 +1,29 @@
+{
+  "capturedAt": "2026-09-25T02:59:00.474Z",
+  "query": {
+    "routeId": "100100252",
+    "startRow": "1",
+    "rowCnt": "3"
+  },
+  "experimentalFilter": true,
+  "raw": [
+    {
+      "routeId": "113900011",
+      "routeNm": "마포05",
+      "routeTy": "마을",
+      "dstnc": "2.1"
+    },
+    {
+      "routeId": "124900003",
+      "routeNm": "강동02",
+      "routeTy": "마을",
+      "dstnc": "28.0"
+    },
+    {
+      "routeId": "100100053",
+      "routeNm": "303",
+      "routeTy": "간선",
+      "dstnc": "54.59"
+    }
+  ]
+}

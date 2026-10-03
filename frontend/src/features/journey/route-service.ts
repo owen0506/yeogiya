@@ -1,17 +1,36 @@
-import { stations as allStations, type Station } from '../stations/stations';
+import { stationPlatforms as allStations, getStation, type Station, type StationPlatform } from '../stations/stations';
 import { interchangeName, networkSegments } from '../stations/network';
+import { findAverageRouteBetween, type AverageTransitEdge, type TransitTopology } from '../transit/average-route-engine';
+import { checkedRouteSeconds, defaultRouteCostProvider, type RouteCostProvider, type RoutePreference } from './route-costs';
 
-export type RouteStep = { station: Station; secondsFromStart: number; transfer: boolean };
-export type JourneyRoute = { steps: RouteStep[]; seconds: number; stops: number; transfers: number };
+export type RouteStep = { station: StationPlatform; secondsFromStart: number; transfer: boolean; distanceMeters?: number };
+export type JourneyRoute = { steps: RouteStep[]; seconds: number; stops: number; transfers: number; official?: { distanceMeters: number; departureAt: string; arrivalAt: string; searchedAt: string; fetchedAt: string; firstTrain: string; destination: string } };
 
-// 역간 2분, 환승 5분은 예상값이며 실시간 운행 시간표가 아닙니다.
-const stations = new Map<string, Station>(allStations.map((station) => [station.id, station]));
-const edges = new Map<string, { to: string; seconds: number; transfer: boolean }[]>();
+// 기존 플랫폼 ID와 연결망을 보존합니다. 시간은 탐색 시 별도 provider에서 받습니다.
+const stations = new Map<string, StationPlatform>(allStations.map((station) => [station.id, station]));
+type RouteEdge = { to: string } & ({ kind: 'ride'; transfer: false } | { kind: 'transfer'; transfer: true });
+const edges = new Map<string, RouteEdge[]>();
 
-function connect(a: Station, b: Station, transfer = false, oneWay = false) {
-  const seconds = transfer ? 300 : 120;
-  edges.set(a.id, [...(edges.get(a.id) ?? []), { to: b.id, seconds, transfer }]);
-  if (!oneWay) edges.set(b.id, [...(edges.get(b.id) ?? []), { to: a.id, seconds, transfer }]);
+// 기존 플랫폼 객체를 참조하되 조회 결과와 타입은 읽기 전용입니다.
+export function getSubwayGraph(): Readonly<{
+  platforms: readonly Readonly<StationPlatform>[];
+  edges: readonly Readonly<RouteEdge & { from: string }>[];
+}> {
+  return Object.freeze({
+    platforms: Object.freeze([...stations.values()]),
+    edges: Object.freeze([...edges].flatMap(([from, list]) => list.map(edge => Object.freeze({ from, ...edge })))),
+  });
+}
+
+// 적재 검증은 탐색과 동일한 플랫폼·방향별 연결을 사용합니다.
+export function getRideGraph() {
+  return { platforms: [...stations.values()].map(p => ({ ...p })), rides: [...edges].flatMap(([from, list]) => list.filter(e => e.kind === 'ride').map(e => ({ from, to: e.to }))) };
+}
+
+function connect(a: StationPlatform, b: StationPlatform, transfer = false, oneWay = false) {
+  const meaning = transfer ? { kind: 'transfer' as const, transfer: true as const } : { kind: 'ride' as const, transfer: false as const };
+  edges.set(a.id, [...(edges.get(a.id) ?? []), { to: b.id, ...meaning }]);
+  if (!oneWay) edges.set(b.id, [...(edges.get(b.id) ?? []), { to: a.id, ...meaning }]);
 }
 
 for (const segment of networkSegments) {
@@ -33,54 +52,90 @@ nodes.forEach((a, index) => nodes.slice(index + 1).forEach((b) => {
   if (interchangeName(a.name) === interchangeName(b.name) && a.line !== b.line) connect(a, b, true);
 }));
 
-export function findRoute(fromId: string, toId: string, preference: 'fastest' | 'fewest-transfers' = 'fastest'): JourneyRoute | null {
-  if (fromId === toId || !stations.has(fromId) || !stations.has(toId)) return null;
-  const distances = new Map<string, number>([[fromId, 0]]);
-  const costs = new Map<string, number>([[fromId, 0]]);
-  const from = stations.get(fromId)!;
-  const to = stations.get(toId)!;
-  const targets = new Set<string>();
+export function findRoute(fromId: string, toId: string, preference: RoutePreference = 'fastest', costProvider: RouteCostProvider = defaultRouteCostProvider): JourneyRoute | null {
+  const origin = getStation(fromId), destination = getStation(toId);
+  if (fromId === toId || !origin || !destination) return null;
+  // 기존 호선별 ID도 읽을 수 있지만, 화면에서는 통합 역 ID를 전달합니다.
+  const from = stations.get(fromId);
+  const to = stations.get(toId);
+  const origins: string[] = [];
+  const targets: string[] = [];
   // 환승역에서 여정을 시작/종료할 때는 이용 승강장까지 별도 환승으로 세지 않습니다.
   for (const station of stations.values()) {
-    if (station.name === from.name && station.line === from.line) { distances.set(station.id, 0); costs.set(station.id, 0); }
-    if (station.name === to.name && station.line === to.line) targets.add(station.id);
+    if (station.stationId === origin.id && (!from || station.line === from.line)) origins.push(station.id);
+    if (station.stationId === destination.id && (!to || station.line === to.line)) targets.push(station.id);
   }
-  let targetId: string | null = null;
-  const previous = new Map<string, { from: string; transfer: boolean }>();
-  const remaining = new Set(stations.keys());
-  while (remaining.size) {
-    let current = '';
-    let best = Infinity;
-    for (const id of remaining) {
-      const cost = costs.get(id) ?? Infinity;
-      if (cost < best) { best = cost; current = id; }
+  // 평균 구간시간은 provider가 공급하고, 경로 선택은 공통 그래프 엔진이 수행합니다.
+  const topology: TransitTopology = {
+    nodes: [...stations.values()].map(station => ({ id: station.id, type: 'SUBWAY_PLATFORM', routeId: station.line })),
+    edges: [...edges].flatMap(([platformId, list]) => list.map((edge, index): AverageTransitEdge => ({
+      id: `${platformId}:${index}`, from: platformId, to: edge.to,
+      averageTravelSeconds: checkedRouteSeconds(edge.kind === 'ride'
+        ? costProvider.rideTime(platformId, edge.to)
+        : costProvider.transferTime(stations.get(platformId)!.stationId, platformId, edge.to)),
+      ...(edge.kind === 'ride'
+        ? { kind: 'RIDE' as const, mode: 'SUBWAY' as const, routeId: stations.get(platformId)!.line }
+        : { kind: 'TRANSFER' as const }),
+    }))),
+  };
+  let result: ReturnType<typeof findAverageRouteBetween>;
+  try { result = findAverageRouteBetween(topology, origins, targets, preference); }
+  catch (error) {
+    if (error instanceof Error && error.message === 'AVERAGE_GRAPH_INVALID_COST') {
+      throw new Error('경로 비용은 비음수 안전 정수(초)여야 합니다.');
     }
-    const distance = distances.get(current);
-    if (distance === undefined) break;
-    remaining.delete(current);
-    if (targets.has(current)) { targetId = current; break; }
-    for (const edge of edges.get(current) ?? []) {
-      const cost = best + edge.seconds + (preference === 'fewest-transfers' && edge.transfer ? 100_000 : 0);
-      if (cost < (costs.get(edge.to) ?? Infinity)) {
-        costs.set(edge.to, cost);
-        distances.set(edge.to, distance + edge.seconds);
-        previous.set(edge.to, { from: current, transfer: edge.transfer });
-      }
-    }
+    throw error;
   }
-  if (!targetId) return null;
-  const steps: RouteStep[] = [];
-  let cursor = targetId;
-  while (true) {
-    const prev = previous.get(cursor);
-    steps.unshift({ station: stations.get(cursor)!, secondsFromStart: distances.get(cursor)!, transfer: prev?.transfer ?? false });
-    if (!prev) break;
-    cursor = prev.from;
-  }
-  steps[0].station = { ...from, branch: steps[0].station.branch };
-  steps[steps.length - 1].station = { ...to, branch: steps[steps.length - 1].station.branch };
+  if (!result) return null;
+  let secondsFromStart = 0;
+  const steps: RouteStep[] = result.nodeIds.map((id, index) => {
+    const edge = result.edges[index - 1];
+    if (edge) secondsFromStart = checkedRouteSeconds(secondsFromStart + edge.averageTravelSeconds);
+    return { station: stations.get(id)!, secondsFromStart, transfer: edge?.kind === 'TRANSFER' };
+  });
+  if (from) steps[0].station = { ...from, branch: steps[0].station.branch };
+  if (to) steps[steps.length - 1].station = { ...to, branch: steps[steps.length - 1].station.branch };
   const transfers = steps.filter((step) => step.transfer).length;
-  return { steps, seconds: distances.get(targetId)!, stops: steps.length - 1 - transfers, transfers };
+  return { steps, seconds: result.averageTravelSeconds, stops: steps.length - 1 - transfers, transfers };
+}
+
+export type RouteStop = { station: Station; lines: string[]; secondsFromStart: number; transfer: boolean };
+
+export function getRouteLegs(route: JourneyRoute) {
+  const legs: { line: string; from: string; to: string; seconds: number }[] = [];
+  let transferSeconds = 0;
+  let leg: (typeof legs)[number] | undefined;
+  for (let i = 1; i < route.steps.length; i++) {
+    const previous = route.steps[i - 1], step = route.steps[i];
+    const seconds = step.secondsFromStart - previous.secondsFromStart;
+    if (step.transfer) {
+      transferSeconds += seconds;
+      leg = undefined;
+      continue;
+    }
+    if (!leg) {
+      leg = { line: previous.station.line, from: getStation(previous.station.stationId)!.name, to: '', seconds: 0 };
+      legs.push(leg);
+    }
+    leg.to = getStation(step.station.stationId)!.name;
+    leg.seconds += seconds;
+  }
+  return { legs, transferSeconds };
+}
+
+// 환승 시간과 호선별 연결은 유지하면서 화면에서는 환승역을 한 번만 표시합니다.
+export function getRouteStops(route: JourneyRoute): RouteStop[] {
+  const stops: RouteStop[] = [];
+  for (const step of route.steps) {
+    const previous = stops[stops.length - 1];
+    if (previous?.station.id === step.station.stationId) {
+      if (!previous.lines.includes(step.station.line)) previous.lines.push(step.station.line);
+      previous.transfer ||= step.transfer;
+    } else {
+      stops.push({ station: getStation(step.station.stationId)!, lines: [step.station.line], secondsFromStart: step.secondsFromStart, transfer: step.transfer });
+    }
+  }
+  return stops;
 }
 
 export function alarmDelaySeconds(route: JourneyRoute, stopsBefore: number): number {

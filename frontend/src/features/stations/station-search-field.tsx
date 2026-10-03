@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { LineBadge, palette, ui } from '../journey/journey-ui';
+import { StationLines, palette, ui } from '../journey/journey-ui';
 import { searchStations, type StationFieldValue } from './stations';
 
 type Props = { label: string; value: StationFieldValue; active: boolean; onFocus: () => void; onChange: (value: StationFieldValue) => void; onSelect: () => void };
@@ -14,12 +14,12 @@ export function StationSearchField({ label, value, active, onFocus, onChange, on
         <Text style={styles.label}>{destination ? '내릴 역' : '출발역'}</Text>
         <TextInput accessibilityLabel={`${label} 검색`} value={value.query} onFocus={onFocus} onChangeText={(query) => onChange({ query, station: null })} placeholder={destination ? '어디에서 내리시나요?' : '어디에서 출발하시나요?'} placeholderTextColor="#9AA49E" autoCorrect={false} maxLength={50} style={styles.input} />
       </View>
-      {value.station && <LineBadge line={value.station.line} small />}
+      {value.station && <StationLines lines={value.station.lines} small />}
       {!!value.query && <Pressable accessibilityRole="button" accessibilityLabel={`${label} 지우기`} onPress={() => { onChange({ query: '', station: null }); onFocus(); }} style={styles.clear}><Text style={{ fontSize: 19, color: '#9AA49E' }}>×</Text></Pressable>}
     </View>
     {active && !value.station && !!value.query.trim() && <View style={styles.results}>
-      <Text accessibilityLiveRegion="polite" style={ui.muted}>{results.length ? '노선을 확인하고 역을 선택해주세요' : '검색 결과가 없어요. 다른 이름을 입력해보세요.'}</Text>
-      {results.slice(0, 10).map((station) => <Pressable key={station.id} accessibilityRole="button" accessibilityLabel={`${label}으로 ${station.name} ${station.line} 선택`} onPress={() => { onChange({ query: station.name, station }); onSelect(); }} style={({ pressed }) => [styles.result, pressed && { backgroundColor: palette.tint }]}><Text style={ui.text}>{station.name}</Text><LineBadge line={station.line} /></Pressable>)}
+      <Text accessibilityLiveRegion="polite" style={ui.muted}>{results.length ? '환승역은 하나로 모아 보여드려요' : '검색 결과가 없어요. 다른 이름을 입력해보세요.'}</Text>
+      {results.slice(0, 10).map((station) => <Pressable key={station.id} accessibilityRole="button" accessibilityLabel={`${label}으로 ${station.name} ${station.lines.join('·')} 선택`} onPress={() => { onChange({ query: station.name, station }); onSelect(); }} style={({ pressed }) => [styles.result, pressed && { backgroundColor: palette.tint }]}><Text style={[ui.text, { flex: 1 }]}>{station.name}</Text><StationLines lines={station.lines} small /></Pressable>)}
       {results.length > 10 && <Text style={ui.muted}>역 이름을 더 입력하면 검색 범위를 좁힐 수 있어요.</Text>}
     </View>}
   </View>;
@@ -32,5 +32,5 @@ const styles = StyleSheet.create({
   input: { fontSize: 16, color: palette.ink, fontWeight: '600', paddingVertical: 2, paddingHorizontal: 0, minWidth: 0 },
   clear: { minWidth: 36, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   results: { borderWidth: 1, borderColor: palette.border, borderRadius: 12, padding: 12, backgroundColor: '#FFF', gap: 4 },
-  result: { minHeight: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6, borderBottomWidth: 1, borderBottomColor: '#F0F3F0' },
+  result: { minHeight: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6, borderBottomWidth: 1, borderBottomColor: '#F0F3F0', gap: 8 },
 });

@@ -1,4 +1,4 @@
-import type { Alarm, AlarmState } from './alarm-types';
+import type { Alarm, AlarmContext, AlarmState } from './alarm-types';
 
 type Adapter = {
   requestAlarmPermission: () => Promise<void>;
@@ -30,7 +30,7 @@ export function createAlarmManager(adapter: Adapter, now = Date.now) {
     tick: () => {
       if (state.status === 'active' && state.alarm && state.alarm.deadline <= now()) update({ status: 'fired' });
     },
-    start: async (destination: string, seconds: number, demo: boolean) => {
+    start: async (destination: string, seconds: number, demo: boolean, context?: AlarmContext) => {
       await initialize();
       if (state.busy || state.status === 'active') return;
       if (!destination.trim() || !Number.isFinite(seconds) || seconds < 1 || seconds > 86400) {
@@ -42,7 +42,7 @@ export function createAlarmManager(adapter: Adapter, now = Date.now) {
         await adapter.requestAlarmPermission();
         await adapter.cancelAlarm();
         update({ status: 'idle', alarm: null });
-        const alarm = { destination, deadline: now() + seconds * 1000, demo };
+        const alarm: Alarm = { destination, deadline: now() + seconds * 1000, demo, ...(context ? { context } : {}) };
         await adapter.scheduleAlarm(alarm);
         update({ status: 'active', alarm });
       } catch (error) { update({ error: error instanceof Error ? error.message : '알림을 예약하지 못했습니다.' }); }

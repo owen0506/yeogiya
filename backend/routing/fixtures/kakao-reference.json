@@ -1,0 +1,187 @@
+{
+  "query": {
+    "start_x": "127.11119217",
+    "start_y": "37.39477123",
+    "end_x": "127.12628814",
+    "end_y": "37.41993056"
+  },
+  "raw": {
+    "status": "OK",
+    "properties": {
+      "total": 15,
+      "bus": 9,
+      "subway": 2,
+      "busAndSubway": 4,
+      "landingURL": "https://map.kakao.com/link/by/traffic/%EC%B6%9C%EB%B0%9C,37.394771,127.111192/%EB%8F%84%EC%B0%A9,37.419931,127.126288"
+    },
+    "routes": [
+      {
+        "properties": {
+          "type": "BUS_AND_SUBWAY",
+          "totalDistance": 5269,
+          "totalTime": 1717,
+          "transfers": 1,
+          "fare": {
+            "value": 1650
+          }
+        },
+        "steps": [
+          {
+            "properties": {
+              "guidance": "경강선 (판교 > 이매)",
+              "type": "SUBWAY",
+              "distance": 1500,
+              "time": 270,
+              "stops": [
+                {
+                  "name": "판교"
+                },
+                {
+                  "name": "성남"
+                },
+                {
+                  "name": "이매"
+                }
+              ],
+              "vehicles": [
+                {
+                  "name": "경강선",
+                  "type": "일반"
+                }
+              ]
+            }
+          },
+          {
+            "properties": {
+              "guidance": "돌마고교돌마고교정류장까지 도보로 이동 (4번 출구)",
+              "type": "WALKING",
+              "distance": 271,
+              "time": 334,
+              "stops": [
+                {
+                  "name": "이매"
+                },
+                {
+                  "name": "돌마고교"
+                }
+              ]
+            }
+          },
+          {
+            "properties": {
+              "guidance": "일반 51외 5대 (돌마고교 > 성남시청전면)",
+              "type": "BUS",
+              "distance": 2930,
+              "time": 552,
+              "stops": [
+                {
+                  "name": "돌마고교"
+                },
+                {
+                  "name": "이매역.진흥아파트.동신아파트"
+                },
+                {
+                  "name": "성남아트센터.태원고교"
+                },
+                {
+                  "name": "야탑역.종합버스터미널(후면)"
+                },
+                {
+                  "name": "성남시청전면"
+                }
+              ],
+              "vehicles": [
+                {
+                  "name": "51",
+                  "type": "일반"
+                },
+                {
+                  "name": "220",
+                  "type": "일반"
+                },
+                {
+                  "name": "17",
+                  "type": "일반"
+                },
+                {
+                  "name": "17-1",
+                  "type": "일반"
+                },
+                {
+                  "name": "119",
+                  "type": "일반"
+                },
+                {
+                  "name": "119-1",
+                  "type": "일반"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "properties": {
+          "type": "BUS",
+          "totalDistance": 4973,
+          "totalTime": 2340,
+          "transfers": 0,
+          "fare": {
+            "value": 1550
+          }
+        },
+        "steps": [
+          {
+            "properties": {
+              "guidance": "마을 76 (판교역동편 > 성남시청전면)",
+              "type": "BUS",
+              "distance": 4127,
+              "time": 1411,
+              "stops": [
+                {
+                  "name": "판교역동편"
+                },
+                {
+                  "name": "봇들마을7.8단지.롯데마트판교점"
+                },
+                {
+                  "name": "보평초.중고(마을)"
+                },
+                {
+                  "name": "봇들마을9단지"
+                },
+                {
+                  "name": "벌말육교"
+                },
+                {
+                  "name": "송현초등학교.판교봇들마을4단지"
+                },
+                {
+                  "name": "아름마을건영아파트"
+                },
+                {
+                  "name": "탑마을대우아파트.선경아파트"
+                },
+                {
+                  "name": "야탑2동행정복지센터.차병원"
+                },
+                {
+                  "name": "야탑역.종합버스터미널(후면)"
+                },
+                {
+                  "name": "성남시청전면"
+                }
+              ],
+              "vehicles": [
+                {
+                  "name": "76",
+                  "type": "마을"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

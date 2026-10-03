@@ -1,0 +1,50 @@
+{
+  "capturedAt": "2026-09-24T11:01:59.363Z",
+  "operation": "getCrdntPrxmtSttnList",
+  "query": {
+    "gpsLati": 37.414486,
+    "gpsLong": 126.614215,
+    "numOfRows": 3
+  },
+  "raw": {
+    "response": {
+      "header": {
+        "resultCode": "00",
+        "resultMsg": "NORMAL SERVICE."
+      },
+      "body": {
+        "items": {
+          "item": [
+            {
+              "citycode": 23,
+              "gpslati": 37.414486,
+              "gpslong": 126.614215,
+              "nodeid": "ICB364000656",
+              "nodenm": "미송초등학교",
+              "nodeno": 38654
+            },
+            {
+              "citycode": 23,
+              "gpslati": 37.414486,
+              "gpslong": 126.614215,
+              "nodeid": "ICB164000656",
+              "nodenm": "미송초등학교",
+              "nodeno": 38654
+            },
+            {
+              "citycode": 23,
+              "gpslati": 37.414651,
+              "gpslong": "126.614530",
+              "nodeid": "ICB364000655",
+              "nodenm": "미송초등학교(하행)",
+              "nodeno": 38653
+            }
+          ]
+        },
+        "numOfRows": 3,
+        "pageNo": 1,
+        "totalCount": 13
+      }
+    }
+  }
+}

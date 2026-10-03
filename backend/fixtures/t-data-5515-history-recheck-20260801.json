@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-09-25T03:20:54.242Z",
+  "crosswalkFixture": "t-data-5515-crosswalk.json",
+  "query": {
+    "routeId": "100100252",
+    "stdrDe": "20260801",
+    "startRow": 1,
+    "rowCnt": 1000
+  },
+  "raw": []
+}

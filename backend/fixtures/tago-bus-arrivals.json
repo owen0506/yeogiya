@@ -1,0 +1,34 @@
+{
+  "capturedAt": "2026-09-24T11:02:00.003Z",
+  "operation": "getSttnAcctoArvlPrearngeInfoList",
+  "query": {
+    "cityCode": 23,
+    "nodeId": "ICB164000656",
+    "numOfRows": 3
+  },
+  "raw": {
+    "response": {
+      "header": {
+        "resultCode": "00",
+        "resultMsg": "NORMAL SERVICE."
+      },
+      "body": {
+        "items": {
+          "item": {
+            "arrprevstationcnt": 1,
+            "arrtime": 447,
+            "nodeid": "ICB164000656",
+            "nodenm": "미송초등학교",
+            "routeid": "ICB161000002",
+            "routeno": 6777,
+            "routetp": "공항버스",
+            "vehicletp": "일반차량"
+          }
+        },
+        "numOfRows": 3,
+        "pageNo": 1,
+        "totalCount": 1
+      }
+    }
+  }
+}

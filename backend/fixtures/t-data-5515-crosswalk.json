@@ -1,0 +1,31 @@
+{
+  "sourceFixture": "t-data-targeted-lookup.json",
+  "status": "matched",
+  "crosswalk": {
+    "scope": "captured-5515-route-identity-only",
+    "taimsProviderId": "seoul-taims",
+    "bisProviderId": "seoul-bis",
+    "taimsRouteId": "100100252",
+    "bisRouteId": "100100252",
+    "routeName": "5515",
+    "evidence": {
+      "routeName": {
+        "taims": "5515",
+        "bis": "5515"
+      },
+      "routeType": {
+        "taims": "지선",
+        "bis": "지선"
+      },
+      "distanceValue": {
+        "taims": 10.8,
+        "bis": 10.8,
+        "unit": "unknown"
+      },
+      "bisUseCode": "1",
+      "bisOperationCode": "1",
+      "terminiCompared": false,
+      "idEqualityUsedAsEvidence": false
+    }
+  }
+}

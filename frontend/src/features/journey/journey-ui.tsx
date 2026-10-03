@@ -18,6 +18,10 @@ export function LineBadge({ line, small = false }: { line: string; small?: boole
   return <View style={[ui.badge, { backgroundColor: lineColor(line) }, small && { paddingHorizontal: 6, paddingVertical: 2 }]}><Text style={{ color: '#FFF', fontWeight: '700', fontSize: small ? 10 : 11 }}>{line}</Text></View>;
 }
 
+export function StationLines({ lines, small = false }: { lines: readonly string[]; small?: boolean }) {
+  return <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, flexShrink: 1 }}>{lines.map((line) => <LineBadge key={line} line={line} small={small} />)}</View>;
+}
+
 export function Action({ children, onPress, secondary = false, disabled = false, label, style }: PropsWithChildren<{ onPress: () => void; secondary?: boolean; disabled?: boolean; label?: string; style?: StyleProp<ViewStyle> }>) {
   return <Pressable accessibilityRole="button" accessibilityLabel={label} accessibilityState={{ disabled }} disabled={disabled} onPress={onPress} style={({ pressed }) => [ui.action, secondary ? ui.secondary : ui.primary, disabled && { opacity: .42 }, pressed && { opacity: .75 }, style]}><Text style={[ui.actionText, { color: secondary ? palette.green : '#FFF' }]}>{children}</Text></Pressable>;
 }

@@ -1,4 +1,4 @@
-import type { Alarm } from './alarm-types';
+import { readAlarm, type Alarm } from './alarm-types';
 
 let timer: ReturnType<typeof setTimeout> | undefined;
 let notification: Notification | undefined;
@@ -14,7 +14,7 @@ export async function scheduleAlarm(alarm: Alarm) {
   try { sessionStorage.setItem(storageKey, JSON.stringify(alarm)); } catch { /* 저장 불가 시 현재 탭에서만 동작 */ }
   timer = setTimeout(() => {
     if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-      try { notification = new Notification(alarm.demo ? '하차 알림 체험' : '하차를 준비해주세요', { body: `${alarm.destination} 도착 전 예상 알림입니다. 실제 역을 확인해주세요.`, tag: storageKey }); } catch { /* 화면 내 알림으로 진행 */ }
+      try { notification = new Notification(alarm.demo ? '하차 알림 체험' : '하차를 준비해주세요', { body: `${alarm.destination} 도착 전 예상 알림입니다. 실제 정류장·역을 확인해주세요.`, tag: storageKey }); } catch { /* 화면 내 알림으로 진행 */ }
     }
   }, Math.max(0, alarm.deadline - Date.now()));
 }
@@ -27,8 +27,8 @@ export async function cancelAlarm() {
 
 export async function restoreAlarm(): Promise<Alarm | null> {
   try {
-    const alarm = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
-    if (alarm && typeof alarm.destination === 'string' && typeof alarm.deadline === 'number' && Number.isFinite(alarm.deadline) && typeof alarm.demo === 'boolean') {
+    const alarm = readAlarm(JSON.parse(sessionStorage.getItem(storageKey) || 'null'));
+    if (alarm) {
       if (alarm.deadline > Date.now()) await scheduleAlarm(alarm);
       return alarm;
     }

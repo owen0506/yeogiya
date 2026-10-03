@@ -1,0 +1,23 @@
+{
+  "capturedAt": "2026-09-24T16:35:11.404Z",
+  "endpoint": "https://t-data.seoul.go.kr/apig/apiman-gateway/tapi/TaimsTaimsTbisMsRouteNode/1.0",
+  "query": {
+    "routeId": "100100252",
+    "startRow": "25",
+    "rowCnt": "2"
+  },
+  "raw": [
+    {
+      "linkDstncAcmtl": "253.0",
+      "sttnSn": "11",
+      "routeId": "100100252",
+      "nodeId": "120000150"
+    },
+    {
+      "linkDstncAcmtl": "368.0",
+      "sttnSn": "12",
+      "routeId": "100100252",
+      "nodeId": "120000032"
+    }
+  ]
+}

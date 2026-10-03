@@ -33,7 +33,7 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
-    "test": "node --test scripts/test-core.cjs",
+    "test": "node --test scripts/test-core.cjs scripts/test-journey-engine.cjs scripts/test-timetable-engine.cjs scripts/test-timetable-plan.cjs scripts/test-average-route-engine.cjs scripts/test-bus-vehicles.cjs scripts/test-alarm-context.cjs",
     "typecheck": "tsc --noEmit",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",

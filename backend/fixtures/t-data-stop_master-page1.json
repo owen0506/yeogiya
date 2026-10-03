@@ -1,0 +1,37 @@
+{
+  "capturedAt": "2026-09-25T02:58:33.509Z",
+  "method": "stopMaster",
+  "query": {
+    "startRow": 1,
+    "rowCnt": 3
+  },
+  "raw": [
+    {
+      "sttnId": "122900102",
+      "sttnNm": "강남신동아파밀리에2단지",
+      "sttnTy": "마을버스",
+      "bitInstlAt": "미설치",
+      "crdntX": "127.101712859",
+      "crdntY": "37.4646017803",
+      "sttnNo": "23893"
+    },
+    {
+      "sttnId": "233000518",
+      "sttnNm": "건농골교차로",
+      "sttnTy": "일반차로",
+      "bitInstlAt": "미설치",
+      "crdntX": "126.850061171",
+      "crdntY": "37.256815799",
+      "sttnNo": "55831"
+    },
+    {
+      "sttnId": "233000544",
+      "sttnNm": "불이원.묘희원",
+      "sttnTy": "일반차로",
+      "bitInstlAt": "미설치",
+      "crdntX": "126.854660189",
+      "crdntY": "37.2056284075",
+      "sttnNo": "55827"
+    }
+  ]
+}

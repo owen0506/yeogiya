@@ -12,7 +12,7 @@ export function AlarmDialog() {
         <Text accessibilityRole="header" accessibilityLiveRegion="assertive" style={{ color: palette.green, fontSize: 38, fontWeight: '800', letterSpacing: -2 }}>여기야!</Text>
         <Text style={{ color: palette.ink, fontSize: 23, fontWeight: '700' }}>{state.alarm?.destination}</Text>
         <Text style={[ui.text, { textAlign: 'center' }]}>{state.alarm?.demo ? '이렇게 내릴 준비를 알려드려요.' : '내릴 준비를 시작해주세요.'}</Text>
-        <Text style={[ui.muted, { textAlign: 'center' }]}>예상 시간으로 보낸 알림이에요.{ '\n' }실제 열차의 현재 역을 함께 확인해주세요.</Text>
+        <Text style={[ui.muted, { textAlign: 'center' }]}>예상 시간으로 보낸 알림이에요.{ '\n' }실제 차량의 현재 위치도 함께 확인해주세요.</Text>
         {!!state.error && <Text accessibilityRole="alert" style={{ color: '#A12C2C' }}>{state.error}</Text>}
         <Action style={{ alignSelf: 'stretch' }} disabled={state.busy} onPress={() => void state.cancel()}>{state.busy ? '종료 중…' : '확인했어요 · 알림 종료'}</Action>
       </View>

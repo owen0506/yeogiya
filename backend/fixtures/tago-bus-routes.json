@@ -1,0 +1,32 @@
+{
+  "capturedAt": "2026-09-24T11:01:26.083Z",
+  "operation": "getRouteNoList",
+  "query": {
+    "cityCode": 23,
+    "numOfRows": 1
+  },
+  "raw": {
+    "response": {
+      "header": {
+        "resultCode": "00",
+        "resultMsg": "NORMAL SERVICE."
+      },
+      "body": {
+        "items": {
+          "item": {
+            "endnodenm": "인천공항T2-3층",
+            "endvehicletime": 2000,
+            "routeid": "ICB161000002",
+            "routeno": 6777,
+            "routetp": "공항버스",
+            "startnodenm": "인천항신국제여객터미널(송도방향)",
+            "startvehicletime": "0500"
+          }
+        },
+        "numOfRows": 1,
+        "pageNo": 1,
+        "totalCount": 364
+      }
+    }
+  }
+}

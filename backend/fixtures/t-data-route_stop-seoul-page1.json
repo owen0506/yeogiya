@@ -1,0 +1,70 @@
+{
+  "capturedAt": "2026-09-24T16:53:28.697Z",
+  "query": {
+    "routeId": "100100252",
+    "startRow": 1,
+    "rowCnt": 10
+  },
+  "raw": [
+    {
+      "linkDstncAcmtl": "479.0",
+      "sttnSn": "19",
+      "routeId": "100100252",
+      "nodeId": "120000036"
+    },
+    {
+      "linkDstncAcmtl": "286.0",
+      "sttnSn": "20",
+      "routeId": "100100252",
+      "nodeId": "120000456"
+    },
+    {
+      "linkDstncAcmtl": "256.0",
+      "sttnSn": "21",
+      "routeId": "100100252",
+      "nodeId": "120000228"
+    },
+    {
+      "linkDstncAcmtl": "610.0",
+      "sttnSn": "22",
+      "routeId": "100100252",
+      "nodeId": "120000039"
+    },
+    {
+      "linkDstncAcmtl": "259.0",
+      "sttnSn": "23",
+      "routeId": "100100252",
+      "nodeId": "120000040"
+    },
+    {
+      "linkDstncAcmtl": "349.0",
+      "sttnSn": "24",
+      "routeId": "100100252",
+      "nodeId": "120000668"
+    },
+    {
+      "linkDstncAcmtl": "353.0",
+      "sttnSn": "25",
+      "routeId": "100100252",
+      "nodeId": "120000670"
+    },
+    {
+      "linkDstncAcmtl": "959.0",
+      "sttnSn": "26",
+      "routeId": "100100252",
+      "nodeId": "120000041"
+    },
+    {
+      "linkDstncAcmtl": "309.0",
+      "sttnSn": "27",
+      "routeId": "100100252",
+      "nodeId": "120000042"
+    },
+    {
+      "linkDstncAcmtl": "452.0",
+      "sttnSn": "28",
+      "routeId": "100100252",
+      "nodeId": "120000217"
+    }
+  ]
+}

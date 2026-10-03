@@ -1,0 +1,186 @@
+{
+  "searchedAt": "2026-09-24T00:00:00.000Z",
+  "fetchedAt": "2026-09-24T00:00:01.000Z",
+  "source": "seoul-metro",
+  "body": {
+    "searchType": "duration",
+    "totalDstc": 6700,
+    "totalReqHr": 690,
+    "totalCardCrg": 1550,
+    "trsitNmtm": 0,
+    "trfstnNms": [],
+    "exclTrfstns": [],
+    "thrghStns": [],
+    "schInclYn": "Y",
+    "paths": [
+      {
+        "dptreStn": {
+          "stnCd": "0222",
+          "stnNo": "222",
+          "stnNm": "강남",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0221",
+          "stnNo": "221",
+          "stnNm": "역삼",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 800,
+        "reqHr": 60,
+        "wtngHr": 0,
+        "tmnlStnNm": "성수",
+        "tmnlStnCd": "0211",
+        "upbdnbSe": "외선",
+        "trainno": "2103",
+        "trainDptreTm": "09:03:30",
+        "trainArvlTm": "09:04:30",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0221",
+          "stnNo": "221",
+          "stnNm": "역삼",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0220",
+          "stnNo": "220",
+          "stnNm": "선릉",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1200,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "성수",
+        "tmnlStnCd": "0211",
+        "upbdnbSe": "외선",
+        "trainno": "2103",
+        "trainDptreTm": "09:05:00",
+        "trainArvlTm": "09:06:30",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0220",
+          "stnNo": "220",
+          "stnNm": "선릉",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0219",
+          "stnNo": "219",
+          "stnNm": "삼성",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1300,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "성수",
+        "tmnlStnCd": "0211",
+        "upbdnbSe": "외선",
+        "trainno": "2103",
+        "trainDptreTm": "09:07:30",
+        "trainArvlTm": "09:09:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0219",
+          "stnNo": "219",
+          "stnNm": "삼성",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0218",
+          "stnNo": "218",
+          "stnNm": "종합운동장",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1000,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "성수",
+        "tmnlStnCd": "0211",
+        "upbdnbSe": "외선",
+        "trainno": "2103",
+        "trainDptreTm": "09:09:30",
+        "trainArvlTm": "09:11:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0218",
+          "stnNo": "218",
+          "stnNm": "종합운동장",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0217",
+          "stnNo": "217",
+          "stnNm": "잠실새내",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1200,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "성수",
+        "tmnlStnCd": "0211",
+        "upbdnbSe": "외선",
+        "trainno": "2103",
+        "trainDptreTm": "09:11:30",
+        "trainArvlTm": "09:13:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0217",
+          "stnNo": "217",
+          "stnNm": "잠실새내",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0216",
+          "stnNo": "216",
+          "stnNm": "잠실",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1200,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "성수",
+        "tmnlStnCd": "0211",
+        "upbdnbSe": "외선",
+        "trainno": "2103",
+        "trainDptreTm": "09:13:30",
+        "trainArvlTm": "09:15:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      }
+    ]
+  }
+}

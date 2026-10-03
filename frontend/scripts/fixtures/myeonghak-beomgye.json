@@ -1,0 +1,108 @@
+{
+  "searchedAt": "2026-09-24T00:00:00.000Z",
+  "fetchedAt": "2026-09-24T00:00:01.000Z",
+  "source": "seoul-metro",
+  "body": {
+    "searchType": "duration",
+    "totalDstc": 4136,
+    "totalReqHr": 510,
+    "totalCardCrg": 1550,
+    "trsitNmtm": 1,
+    "trfstnNms": [
+      {
+        "stnNm": "금정",
+        "dptreLineNm": "1호선 경부선",
+        "arvlLineNm": "4호선"
+      }
+    ],
+    "exclTrfstns": [],
+    "thrghStns": [],
+    "schInclYn": "Y",
+    "paths": [
+      {
+        "dptreStn": {
+          "stnCd": "1707",
+          "stnNo": "P148",
+          "stnNm": "명학",
+          "lineNm": "1호선",
+          "brlnNm": "경부선"
+        },
+        "arvlStn": {
+          "stnCd": "1708",
+          "stnNo": "P149",
+          "stnNm": "금정",
+          "lineNm": "1호선",
+          "brlnNm": "경부선"
+        },
+        "stnSctnDstc": 1400,
+        "reqHr": 120,
+        "wtngHr": 0,
+        "tmnlStnNm": "신창",
+        "tmnlStnCd": "1408",
+        "upbdnbSe": "하행",
+        "trainno": "K629",
+        "trainDptreTm": "09:20:30",
+        "trainArvlTm": "09:22:30",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1708",
+          "stnNo": "P149",
+          "stnNm": "금정",
+          "lineNm": "1호선",
+          "brlnNm": "경부선"
+        },
+        "arvlStn": {
+          "stnCd": "1458",
+          "stnNo": "443",
+          "stnNm": "금정",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 136,
+        "reqHr": 113,
+        "wtngHr": 97,
+        "tmnlStnNm": null,
+        "tmnlStnCd": null,
+        "upbdnbSe": null,
+        "trainno": null,
+        "trainDptreTm": null,
+        "trainArvlTm": null,
+        "trsitYn": "Y",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "1458",
+          "stnNo": "443",
+          "stnNm": "금정",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "1457",
+          "stnNo": "442",
+          "stnNm": "범계",
+          "lineNm": "4호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 2600,
+        "reqHr": 180,
+        "wtngHr": 0,
+        "tmnlStnNm": "불암산",
+        "tmnlStnCd": "0409",
+        "upbdnbSe": "상행",
+        "trainno": "4548",
+        "trainDptreTm": "09:26:00",
+        "trainArvlTm": "09:29:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      }
+    ]
+  }
+}

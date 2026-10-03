@@ -1,0 +1,57 @@
+{
+  "capturedAt": "2026-09-24T11:02:26.869Z",
+  "operation": "getRouteAcctoThrghSttnList",
+  "query": {
+    "cityCode": 23,
+    "routeId": "ICB161000002",
+    "numOfRows": 3,
+    "pageNo": 10
+  },
+  "raw": {
+    "response": {
+      "header": {
+        "resultCode": "00",
+        "resultMsg": "NORMAL SERVICE."
+      },
+      "body": {
+        "items": {
+          "item": [
+            {
+              "gpslati": 37.413186,
+              "gpslong": "126.615660",
+              "nodeid": "ICB164000644",
+              "nodenm": "송도오션파크베르디움",
+              "nodeno": 38642,
+              "nodeord": 28,
+              "routeid": "ICB161000002",
+              "updowncd": 1
+            },
+            {
+              "gpslati": 37.414651,
+              "gpslong": "126.614530",
+              "nodeid": "ICB164000655",
+              "nodenm": "미송초등학교(하행)",
+              "nodeno": 38653,
+              "nodeord": 29,
+              "routeid": "ICB161000002",
+              "updowncd": 1
+            },
+            {
+              "gpslati": 37.423803,
+              "gpslong": "126.605860",
+              "nodeid": "ICB164000664",
+              "nodenm": "인천항신국제여객터미널(아암3교방향)",
+              "nodeno": 38662,
+              "nodeord": 30,
+              "routeid": "ICB161000002",
+              "updowncd": 1
+            }
+          ]
+        },
+        "numOfRows": 3,
+        "pageNo": 10,
+        "totalCount": 30
+      }
+    }
+  }
+}

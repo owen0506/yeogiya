@@ -1,0 +1,108 @@
+{
+  "searchedAt": "2026-09-24T00:00:00.000Z",
+  "fetchedAt": "2026-09-24T00:00:01.000Z",
+  "source": "seoul-metro",
+  "body": {
+    "searchType": "duration",
+    "totalDstc": 1223,
+    "totalReqHr": 540,
+    "totalCardCrg": 1550,
+    "trsitNmtm": 1,
+    "trfstnNms": [
+      {
+        "stnNm": "성수",
+        "dptreLineNm": "2호선 성수지선",
+        "arvlLineNm": "2호선"
+      }
+    ],
+    "exclTrfstns": [],
+    "thrghStns": [],
+    "schInclYn": "Y",
+    "paths": [
+      {
+        "dptreStn": {
+          "stnCd": "0244",
+          "stnNo": "211-1",
+          "stnNm": "용답",
+          "lineNm": "2호선",
+          "brlnNm": "성수지선"
+        },
+        "arvlStn": {
+          "stnCd": "0211",
+          "stnNo": "211",
+          "stnNm": "성수",
+          "lineNm": "2호선",
+          "brlnNm": "성수지선"
+        },
+        "stnSctnDstc": 0,
+        "reqHr": 180,
+        "wtngHr": 0,
+        "tmnlStnNm": "성수",
+        "tmnlStnCd": "0211",
+        "upbdnbSe": "내선",
+        "trainno": "1546",
+        "trainDptreTm": "09:19:00",
+        "trainArvlTm": "09:22:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0211",
+          "stnNo": "211",
+          "stnNm": "성수",
+          "lineNm": "2호선",
+          "brlnNm": "성수지선"
+        },
+        "arvlStn": {
+          "stnCd": "0211",
+          "stnNo": "211",
+          "stnNm": "성수",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 23,
+        "reqHr": 212,
+        "wtngHr": 58,
+        "tmnlStnNm": null,
+        "tmnlStnCd": null,
+        "upbdnbSe": null,
+        "trainno": null,
+        "trainDptreTm": null,
+        "trainArvlTm": null,
+        "trsitYn": "Y",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      },
+      {
+        "dptreStn": {
+          "stnCd": "0211",
+          "stnNo": "211",
+          "stnNm": "성수",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "arvlStn": {
+          "stnCd": "0212",
+          "stnNo": "212",
+          "stnNm": "건대입구",
+          "lineNm": "2호선",
+          "brlnNm": null
+        },
+        "stnSctnDstc": 1200,
+        "reqHr": 90,
+        "wtngHr": 0,
+        "tmnlStnNm": "신도림",
+        "tmnlStnCd": "0234",
+        "upbdnbSe": "내선",
+        "trainno": "2152",
+        "trainDptreTm": "09:26:30",
+        "trainArvlTm": "09:28:00",
+        "trsitYn": "N",
+        "etrnYn": "N",
+        "nonstopYn": "N"
+      }
+    ]
+  }
+}

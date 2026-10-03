@@ -1,0 +1,12 @@
+{
+  "capturedAt": "2026-09-25T03:14:36.899Z",
+  "crosswalkFixture": "t-data-5515-crosswalk.json",
+  "dateSelection": "Previous calendar month, same day; diagnostic only. Section-time availability was not established.",
+  "query": {
+    "routeId": "100100252",
+    "stdrDe": "20260701",
+    "startRow": 1,
+    "rowCnt": 1000
+  },
+  "raw": []
+}

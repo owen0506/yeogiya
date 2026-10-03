@@ -1,0 +1,56 @@
+{
+  "capturedAt": "2026-09-24T11:01:40.375Z",
+  "operation": "getRouteAcctoBusLcList",
+  "query": {
+    "cityCode": 23,
+    "routeId": "ICB161000002",
+    "numOfRows": 3
+  },
+  "raw": {
+    "response": {
+      "header": {
+        "resultCode": "00",
+        "resultMsg": "NORMAL SERVICE."
+      },
+      "body": {
+        "items": {
+          "item": [
+            {
+              "gpslati": 37.423046,
+              "gpslong": 126.605949,
+              "nodeid": "ICB164000654",
+              "nodenm": "인천항신국제여객터미널(송도방향)",
+              "nodeord": 1,
+              "routenm": 6777,
+              "routetp": "공항버스",
+              "vehicleno": "인천70바4029"
+            },
+            {
+              "gpslati": 37.461761,
+              "gpslong": 126.488525,
+              "nodeid": "ICB161000629",
+              "nodenm": "인천대교TG(미정차)",
+              "nodeord": 12,
+              "routenm": 6777,
+              "routetp": "공항버스",
+              "vehicleno": "인천70바4028"
+            },
+            {
+              "gpslati": 37.387744,
+              "gpslong": 126.638519,
+              "nodeid": "ICB164000394",
+              "nodenm": "인천스타트업파크",
+              "nodeord": 23,
+              "routenm": 6777,
+              "routetp": "공항버스",
+              "vehicleno": "인천70바4027"
+            }
+          ]
+        },
+        "numOfRows": 3,
+        "pageNo": 1,
+        "totalCount": 3
+      }
+    }
+  }
+}

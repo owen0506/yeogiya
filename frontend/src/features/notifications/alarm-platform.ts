@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import type { Alarm } from './alarm-types';
+import { readAlarm, type Alarm } from './alarm-types';
 
 const identifier = 'subway-alarm-active';
 const channelId = 'subway-arrival';
@@ -25,7 +25,7 @@ export async function requestAlarmPermission() {
 export async function scheduleAlarm(alarm: Alarm) {
   await Notifications.scheduleNotificationAsync({
     identifier,
-    content: { title: alarm.demo ? '하차 알림 체험' : '하차를 준비해주세요', body: `${alarm.destination} 도착 전 예상 알림입니다. 실제 역을 확인해주세요.`, sound: 'default', data: { ...alarm } },
+    content: { title: alarm.demo ? '하차 알림 체험' : '하차를 준비해주세요', body: `${alarm.destination} 도착 전 예상 알림입니다. 실제 정류장·역을 확인해주세요.`, sound: 'default', data: { ...alarm } },
     trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: Math.max(1, Math.ceil((alarm.deadline - Date.now()) / 1000)), channelId },
   });
 }
@@ -38,6 +38,5 @@ export async function cancelAlarm() {
 export async function restoreAlarm(): Promise<Alarm | null> {
   const pending = await Notifications.getAllScheduledNotificationsAsync();
   const data = pending.find((item) => item.identifier === identifier)?.content.data;
-  if (!data || typeof data.destination !== 'string' || typeof data.deadline !== 'number' || !Number.isFinite(data.deadline) || typeof data.demo !== 'boolean') return null;
-  return { destination: data.destination, deadline: data.deadline, demo: data.demo };
+  return readAlarm(data);
 }

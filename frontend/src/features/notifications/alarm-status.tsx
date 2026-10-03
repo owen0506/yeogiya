@@ -21,6 +21,7 @@ export function AlarmStatus() {
           {state.status === 'fired' ? '여기야! 내릴 준비를 해주세요' : '하차 알림이 켜져 있어요'}
         </Text>
         <View style={ui.spread}><Text style={{ color: palette.green, fontSize: 26, fontWeight: '800' }}>{state.alarm.destination}</Text>{state.status === 'active' && <Text accessibilityLabel={`알림까지 ${remaining}초`} style={{ color: palette.green, fontSize: 24, fontWeight: '700', fontVariant: ['tabular-nums'] }}>{Math.floor(remaining / 60).toString().padStart(2, '0')}:{(remaining % 60).toString().padStart(2, '0')}</Text>}</View>
+        {state.alarm.context && <Text style={ui.muted}>{state.alarm.context.mode === 'SUBWAY' ? '선택한 열차' : '선택한 버스'} {state.alarm.context.vehicleId} · 이 구간 하차 알림</Text>}
         <Text style={{ color: '#566B7C', lineHeight: 22 }}>
           {state.alarm.demo ? '10초 체험' : '예상 이동 시간 기준'} · 알림 예정 {new Date(state.alarm.deadline).toLocaleTimeString('ko-KR')}
           {state.status === 'fired' ? '\n예상 알림 시각이 되었습니다. 실제 역을 확인해주세요.' : ''}
