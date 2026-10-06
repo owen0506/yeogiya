@@ -1,0 +1,94 @@
+{
+  "providerId": "tago",
+  "cityCode": "31160",
+  "stopId": "GGB225000047",
+  "pages": [
+    {
+      "capturedAt": "2026-10-06T08:05:20.324Z",
+      "operation": "getSttnAcctoArvlPrearngeInfoList",
+      "query": {
+        "cityCode": "31160",
+        "nodeId": "GGB225000047",
+        "pageNo": 1,
+        "numOfRows": 100
+      },
+      "raw": {
+        "response": {
+          "header": {
+            "resultCode": "00",
+            "resultMsg": "NORMAL SERVICE."
+          },
+          "body": {
+            "items": {
+              "item": [
+                {
+                  "nodeid": "GGB225000047",
+                  "nodenm": "산본역",
+                  "routeid": "GGB225000006",
+                  "routeno": 31,
+                  "routetp": "일반버스",
+                  "arrtime": 1657,
+                  "arrprevstationcnt": 22,
+                  "vehicletp": "일반차량"
+                },
+                {
+                  "nodeid": "GGB225000047",
+                  "nodenm": "산본역",
+                  "routeid": "GGB225000006",
+                  "routeno": 31,
+                  "routetp": "일반버스",
+                  "arrtime": 926,
+                  "arrprevstationcnt": 11,
+                  "vehicletp": "저상버스"
+                },
+                {
+                  "nodeid": "GGB225000047",
+                  "nodenm": "산본역",
+                  "routeid": "GGB225000009",
+                  "routeno": 30,
+                  "routetp": "일반버스",
+                  "arrtime": 882,
+                  "arrprevstationcnt": 9,
+                  "vehicletp": "저상버스"
+                },
+                {
+                  "nodeid": "GGB225000047",
+                  "nodenm": "산본역",
+                  "routeid": "GGB225000009",
+                  "routeno": 30,
+                  "routetp": "일반버스",
+                  "arrtime": 0,
+                  "arrprevstationcnt": 1,
+                  "vehicletp": "저상버스"
+                },
+                {
+                  "nodeid": "GGB225000047",
+                  "nodenm": "산본역",
+                  "routeid": "GGB234001163",
+                  "routeno": 6501,
+                  "routetp": "직행좌석버스",
+                  "arrtime": 652,
+                  "arrprevstationcnt": 7,
+                  "vehicletp": "일반차량"
+                },
+                {
+                  "nodeid": "GGB225000047",
+                  "nodenm": "산본역",
+                  "routeid": "GGB234001163",
+                  "routeno": 6501,
+                  "routetp": "직행좌석버스",
+                  "arrtime": 36,
+                  "arrprevstationcnt": 1,
+                  "vehicletp": "일반차량"
+                }
+              ]
+            },
+            "pageNo": 1,
+            "numOfRows": 100,
+            "totalCount": 6
+          }
+        }
+      }
+    }
+  ]
+}

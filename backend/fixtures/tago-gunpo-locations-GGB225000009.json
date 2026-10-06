@@ -1,0 +1,124 @@
+{
+  "providerId": "tago",
+  "cityCode": "31160",
+  "routeId": "GGB225000009",
+  "pages": [
+    {
+      "capturedAt": "2026-10-06T08:05:17.207Z",
+      "operation": "getRouteAcctoBusLcList",
+      "query": {
+        "cityCode": "31160",
+        "routeId": "GGB225000009",
+        "pageNo": 1,
+        "numOfRows": 100
+      },
+      "raw": {
+        "response": {
+          "header": {
+            "resultCode": "00",
+            "resultMsg": "NORMAL SERVICE."
+          },
+          "body": {
+            "items": {
+              "item": [
+                {
+                  "vehicleno": "경기75사1021",
+                  "nodeid": "GGB225000308",
+                  "nodenm": "용호대림",
+                  "nodeord": 8,
+                  "gpslati": 37.3438,
+                  "gpslong": 126.93825,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1023",
+                  "nodeid": "GGB225000078",
+                  "nodenm": "중앙공원.산본제일병원",
+                  "nodeord": 17,
+                  "gpslati": 37.36409,
+                  "gpslong": 126.93041,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1026",
+                  "nodeid": "GGB225000082",
+                  "nodenm": "8단지덕유아파트",
+                  "nodeord": 31,
+                  "gpslati": 37.35621,
+                  "gpslong": 126.91804,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1028",
+                  "nodeid": "GGB225000149",
+                  "nodenm": "충무주공아파트",
+                  "nodeord": 37,
+                  "gpslati": 37.35719,
+                  "gpslong": 126.93608,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1027",
+                  "nodeid": "GGB225000043",
+                  "nodenm": "군포중학교",
+                  "nodeord": 55,
+                  "gpslati": 37.35666,
+                  "gpslong": 126.9451,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1020",
+                  "nodeid": "GGB225000415",
+                  "nodenm": "수도사업소.e비즈니스고",
+                  "nodeord": 67,
+                  "gpslati": 37.3621,
+                  "gpslong": 126.91976,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1034",
+                  "nodeid": "GGB225000367",
+                  "nodenm": "모란.우방아파트",
+                  "nodeord": 75,
+                  "gpslati": 37.36918,
+                  "gpslong": 126.93072,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1022",
+                  "nodeid": "GGB225000052",
+                  "nodenm": "산본역",
+                  "nodeord": 80,
+                  "gpslati": 37.35824,
+                  "gpslong": 126.93251,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1024",
+                  "nodeid": "GGB225000262",
+                  "nodenm": "삼성마을1단지.이마트트레이더스",
+                  "nodeord": 90,
+                  "gpslati": 37.34096,
+                  "gpslong": 126.93486,
+                  "routenm": 30,
+                  "routetp": "일반버스"
+                }
+              ]
+            },
+            "pageNo": 1,
+            "numOfRows": 100,
+            "totalCount": 9
+          }
+        }
+      }
+    }
+  ]
+}

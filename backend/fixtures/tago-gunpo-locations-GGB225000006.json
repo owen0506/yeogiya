@@ -1,0 +1,114 @@
+{
+  "providerId": "tago",
+  "cityCode": "31160",
+  "routeId": "GGB225000006",
+  "pages": [
+    {
+      "capturedAt": "2026-10-06T08:05:18.770Z",
+      "operation": "getRouteAcctoBusLcList",
+      "query": {
+        "cityCode": "31160",
+        "routeId": "GGB225000006",
+        "pageNo": 1,
+        "numOfRows": 100
+      },
+      "raw": {
+        "response": {
+          "header": {
+            "resultCode": "00",
+            "resultMsg": "NORMAL SERVICE."
+          },
+          "body": {
+            "items": {
+              "item": [
+                {
+                  "vehicleno": "경기75사1008",
+                  "nodeid": "GGB225000189",
+                  "nodenm": "대야미입구",
+                  "nodeord": 9,
+                  "gpslati": 37.32691,
+                  "gpslong": 126.9186,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1005",
+                  "nodeid": "GGB225000241",
+                  "nodenm": "부곡지구입구",
+                  "nodeord": 20,
+                  "gpslati": 37.32537,
+                  "gpslong": 126.94,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1000",
+                  "nodeid": "GGB225000086",
+                  "nodenm": "11단지주공아파트",
+                  "nodeord": 29,
+                  "gpslati": 37.36461,
+                  "gpslong": 126.93398,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1006",
+                  "nodeid": "GGB225000215",
+                  "nodenm": "14단지아파트사거리",
+                  "nodeord": 41,
+                  "gpslati": 37.37289,
+                  "gpslong": 126.93662,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1004",
+                  "nodeid": "GGB225000052",
+                  "nodenm": "산본역",
+                  "nodeord": 50,
+                  "gpslati": 37.35824,
+                  "gpslong": 126.93251,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1007",
+                  "nodeid": "GGB225000242",
+                  "nodenm": "부곡지구입구",
+                  "nodeord": 57,
+                  "gpslati": 37.32583,
+                  "gpslong": 126.93991,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1015",
+                  "nodeid": "GGB225000434",
+                  "nodenm": "송정지구입구",
+                  "nodeord": 65,
+                  "gpslati": 37.31547,
+                  "gpslong": 126.91744,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                },
+                {
+                  "vehicleno": "경기75사1001",
+                  "nodeid": "GGB225000435",
+                  "nodenm": "송정지구입구",
+                  "nodeord": 71,
+                  "gpslati": 37.31539,
+                  "gpslong": 126.91742,
+                  "routenm": 31,
+                  "routetp": "일반버스"
+                }
+              ]
+            },
+            "pageNo": 1,
+            "numOfRows": 100,
+            "totalCount": 8
+          }
+        }
+      }
+    }
+  ]
+}

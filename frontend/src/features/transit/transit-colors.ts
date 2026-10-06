@@ -12,7 +12,7 @@ const busColors = {
 export function busColor(routeType?: string): string {
   if (!routeType) return busColors.unknown;
   if (/간선|trunk|blue/i.test(routeType)) return busColors.trunk;
-  if (/지선|마을|branch|local|green/i.test(routeType)) return busColors.branch;
+  if (/지선|마을|일반|시내|branch|local|green/i.test(routeType)) return busColors.branch;
   if (/광역|급행|rapid|red/i.test(routeType)) return busColors.rapid;
   if (/순환|circular|yellow/i.test(routeType)) return busColors.circular;
   return busColors.unknown;

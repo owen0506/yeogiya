@@ -1,0 +1,1218 @@
+{
+  "providerId": "tago",
+  "cityCode": "31160",
+  "fetchedAt": "2026-10-06T08:05:18.771Z",
+  "routes": [
+    {
+      "routeId": "GGB225000009",
+      "routeNumber": "30",
+      "routeType": "일반버스",
+      "stops": [
+        {
+          "stopId": "GGB225000257",
+          "name": "군포복합화물터미널",
+          "latitude": 37.3299167,
+          "longitude": 126.9339667,
+          "stopSequence": 1
+        },
+        {
+          "stopId": "GGB225000228",
+          "name": "군포공영차고지",
+          "latitude": 37.3318,
+          "longitude": 126.9275833,
+          "stopSequence": 2
+        },
+        {
+          "stopId": "GGB225000419",
+          "name": "삼성마을5단지아파트입구",
+          "latitude": 37.3337,
+          "longitude": 126.9268833,
+          "stopSequence": 3
+        },
+        {
+          "stopId": "GGB225000247",
+          "name": "삼성마을5단지아파트",
+          "latitude": 37.33415,
+          "longitude": 126.9296167,
+          "stopSequence": 4
+        },
+        {
+          "stopId": "GGB225000258",
+          "name": "신기초등학교정문",
+          "latitude": 37.3374167,
+          "longitude": 126.9328333,
+          "stopSequence": 5
+        },
+        {
+          "stopId": "GGB225000261",
+          "name": "신기초등학교후문",
+          "latitude": 37.33915,
+          "longitude": 126.9326833,
+          "stopSequence": 6
+        },
+        {
+          "stopId": "GGB225000263",
+          "name": "삼성마을1단지.이마트트레이더스",
+          "latitude": 37.3406667,
+          "longitude": 126.9346667,
+          "stopSequence": 7
+        },
+        {
+          "stopId": "GGB225000308",
+          "name": "용호대림",
+          "latitude": 37.3437,
+          "longitude": 126.9382667,
+          "stopSequence": 8
+        },
+        {
+          "stopId": "GGB225000196",
+          "name": "당동중학교",
+          "latitude": 37.3450667,
+          "longitude": 126.9384333,
+          "stopSequence": 9
+        },
+        {
+          "stopId": "GGB225000233",
+          "name": "당동초등학교",
+          "latitude": 37.347,
+          "longitude": 126.9398833,
+          "stopSequence": 10
+        },
+        {
+          "stopId": "GGB225000209",
+          "name": "금당터널입구.대림아파트",
+          "latitude": 37.3486667,
+          "longitude": 126.9382,
+          "stopSequence": 11
+        },
+        {
+          "stopId": "GGB225000137",
+          "name": "오금동행정복지센터.다산아파트",
+          "latitude": 37.3517333,
+          "longitude": 126.93035,
+          "stopSequence": 12
+        },
+        {
+          "stopId": "GGB225000136",
+          "name": "군포화산초등학교.소월아파트",
+          "latitude": 37.3530667,
+          "longitude": 126.9328,
+          "stopSequence": 13
+        },
+        {
+          "stopId": "GGB225000048",
+          "name": "주공2단지충무아파트",
+          "latitude": 37.35545,
+          "longitude": 126.9333833,
+          "stopSequence": 14
+        },
+        {
+          "stopId": "GGB225000047",
+          "name": "산본역",
+          "latitude": 37.3578667,
+          "longitude": 126.9336333,
+          "stopSequence": 15
+        },
+        {
+          "stopId": "GGB225000116",
+          "name": "군포시청.군포시의회",
+          "latitude": 37.3603,
+          "longitude": 126.9336167,
+          "stopSequence": 16
+        },
+        {
+          "stopId": "GGB225000078",
+          "name": "중앙공원.산본제일병원",
+          "latitude": 37.3640667,
+          "longitude": 126.9304667,
+          "stopSequence": 17
+        },
+        {
+          "stopId": "GGB225000001",
+          "name": "군포문화예술회관",
+          "latitude": 37.36675,
+          "longitude": 126.9296333,
+          "stopSequence": 18
+        },
+        {
+          "stopId": "GGB225000368",
+          "name": "모란.우방아파트",
+          "latitude": 37.3694167,
+          "longitude": 126.93025,
+          "stopSequence": 19
+        },
+        {
+          "stopId": "GGB225000366",
+          "name": "목련삼거리",
+          "latitude": 37.3703333,
+          "longitude": 126.9293,
+          "stopSequence": 20
+        },
+        {
+          "stopId": "GGB225000360",
+          "name": "12단지목련후문",
+          "latitude": 37.3714,
+          "longitude": 126.9288,
+          "stopSequence": 21
+        },
+        {
+          "stopId": "GGB225000073",
+          "name": "군포문화예술회관.광정동주택단지",
+          "latitude": 37.36825,
+          "longitude": 126.9265833,
+          "stopSequence": 22
+        },
+        {
+          "stopId": "GGB225000068",
+          "name": "남천병원.서울시남부기술교육원",
+          "latitude": 37.36455,
+          "longitude": 126.9265333,
+          "stopSequence": 23
+        },
+        {
+          "stopId": "GGB225000383",
+          "name": "남천병원",
+          "latitude": 37.3645,
+          "longitude": 126.9256333,
+          "stopSequence": 24
+        },
+        {
+          "stopId": "GGB225000381",
+          "name": "9단지한양후문",
+          "latitude": 37.36585,
+          "longitude": 126.92355,
+          "stopSequence": 25
+        },
+        {
+          "stopId": "GGB225000162",
+          "name": "궁내초등학교정문",
+          "latitude": 37.36445,
+          "longitude": 126.9209167,
+          "stopSequence": 26
+        },
+        {
+          "stopId": "GGB225000108",
+          "name": "수도사업소.e비즈니스고",
+          "latitude": 37.3615667,
+          "longitude": 126.9194833,
+          "stopSequence": 27
+        },
+        {
+          "stopId": "GGB225000239",
+          "name": "수리동성당",
+          "latitude": 37.3595167,
+          "longitude": 126.91795,
+          "stopSequence": 28
+        },
+        {
+          "stopId": "GGB225000083",
+          "name": "수리동설악아파트",
+          "latitude": 37.3580667,
+          "longitude": 126.9164167,
+          "stopSequence": 29
+        },
+        {
+          "stopId": "GGB225000200",
+          "name": "중앙도서관",
+          "latitude": 37.3566,
+          "longitude": 126.91615,
+          "stopSequence": 30
+        },
+        {
+          "stopId": "GGB225000082",
+          "name": "8단지덕유아파트",
+          "latitude": 37.3560333,
+          "longitude": 126.9179833,
+          "stopSequence": 31
+        },
+        {
+          "stopId": "GGB225000081",
+          "name": "수리동행정복지센터",
+          "latitude": 37.3556667,
+          "longitude": 126.9207,
+          "stopSequence": 32
+        },
+        {
+          "stopId": "GGB225000080",
+          "name": "8단지삼환계룡아파트",
+          "latitude": 37.3568333,
+          "longitude": 126.9226333,
+          "stopSequence": 33
+        },
+        {
+          "stopId": "GGB225000212",
+          "name": "6단지아파트",
+          "latitude": 37.3591667,
+          "longitude": 126.9270333,
+          "stopSequence": 34
+        },
+        {
+          "stopId": "GGB225000388",
+          "name": "6단지세종",
+          "latitude": 37.3588833,
+          "longitude": 126.92995,
+          "stopSequence": 35
+        },
+        {
+          "stopId": "GGB225000047",
+          "name": "산본역",
+          "latitude": 37.3578667,
+          "longitude": 126.9336333,
+          "stopSequence": 36
+        },
+        {
+          "stopId": "GGB225000149",
+          "name": "충무주공아파트",
+          "latitude": 37.3574,
+          "longitude": 126.9356333,
+          "stopSequence": 37
+        },
+        {
+          "stopId": "GGB225000031",
+          "name": "군포중학교",
+          "latitude": 37.3563,
+          "longitude": 126.9451833,
+          "stopSequence": 38
+        },
+        {
+          "stopId": "GGB225000030",
+          "name": "군포성당",
+          "latitude": 37.3593,
+          "longitude": 126.9463667,
+          "stopSequence": 39
+        },
+        {
+          "stopId": "GGB225000029",
+          "name": "제일공원앞",
+          "latitude": 37.3621333,
+          "longitude": 126.9455833,
+          "stopSequence": 40
+        },
+        {
+          "stopId": "GGB225000028",
+          "name": "금정새마을금고",
+          "latitude": 37.3633833,
+          "longitude": 126.94455,
+          "stopSequence": 41
+        },
+        {
+          "stopId": "GGB225000250",
+          "name": "산본주유소",
+          "latitude": 37.3634333,
+          "longitude": 126.94275,
+          "stopSequence": 42
+        },
+        {
+          "stopId": "GGB225000131",
+          "name": "국민은행",
+          "latitude": 37.3631833,
+          "longitude": 126.94135,
+          "stopSequence": 43
+        },
+        {
+          "stopId": "GGB225000130",
+          "name": "금정초등학교",
+          "latitude": 37.3649667,
+          "longitude": 126.9403167,
+          "stopSequence": 44
+        },
+        {
+          "stopId": "GGB225000129",
+          "name": "산본시장사거리",
+          "latitude": 37.36845,
+          "longitude": 126.9382667,
+          "stopSequence": 45
+        },
+        {
+          "stopId": "GGB225000128",
+          "name": "삼성아파트입구",
+          "latitude": 37.3702833,
+          "longitude": 126.9399667,
+          "stopSequence": 46
+        },
+        {
+          "stopId": "GGB225000127",
+          "name": "금정역",
+          "latitude": 37.3717833,
+          "longitude": 126.9422,
+          "stopSequence": 47
+        },
+        {
+          "stopId": "GGB225000115",
+          "name": "금정역",
+          "latitude": 37.3710833,
+          "longitude": 126.94325,
+          "stopSequence": 48
+        },
+        {
+          "stopId": "GGB225000015",
+          "name": "금정가구거리",
+          "latitude": 37.3686167,
+          "longitude": 126.9444167,
+          "stopSequence": 49
+        },
+        {
+          "stopId": "GGB225000170",
+          "name": "은혜공원",
+          "latitude": 37.3669667,
+          "longitude": 126.9425833,
+          "stopSequence": 50
+        },
+        {
+          "stopId": "GGB225000097",
+          "name": "금정농협앞",
+          "latitude": 37.3654333,
+          "longitude": 126.9426667,
+          "stopSequence": 51
+        },
+        {
+          "stopId": "GGB225000046",
+          "name": "금정새마을금고",
+          "latitude": 37.3635,
+          "longitude": 126.9442667,
+          "stopSequence": 52
+        },
+        {
+          "stopId": "GGB225000045",
+          "name": "제일공원앞",
+          "latitude": 37.36195,
+          "longitude": 126.9455167,
+          "stopSequence": 53
+        },
+        {
+          "stopId": "GGB225000044",
+          "name": "군포성당",
+          "latitude": 37.35865,
+          "longitude": 126.946,
+          "stopSequence": 54
+        },
+        {
+          "stopId": "GGB225000043",
+          "name": "군포중학교",
+          "latitude": 37.3565833,
+          "longitude": 126.9449667,
+          "stopSequence": 55
+        },
+        {
+          "stopId": "GGB225000134",
+          "name": "주공1단지.무궁화아파트",
+          "latitude": 37.35735,
+          "longitude": 126.9360833,
+          "stopSequence": 56
+        },
+        {
+          "stopId": "GGB225000052",
+          "name": "산본역",
+          "latitude": 37.3582,
+          "longitude": 126.9324,
+          "stopSequence": 57
+        },
+        {
+          "stopId": "GGB225000387",
+          "name": "6단지세종",
+          "latitude": 37.3593833,
+          "longitude": 126.93005,
+          "stopSequence": 58
+        },
+        {
+          "stopId": "GGB225000211",
+          "name": "7단지아파트",
+          "latitude": 37.3593667,
+          "longitude": 126.92685,
+          "stopSequence": 59
+        },
+        {
+          "stopId": "GGB225000390",
+          "name": "계룡.한양아파트",
+          "latitude": 37.3573833,
+          "longitude": 126.9232333,
+          "stopSequence": 60
+        },
+        {
+          "stopId": "GGB225000391",
+          "name": "수리동행정복지센터",
+          "latitude": 37.3561,
+          "longitude": 126.9215167,
+          "stopSequence": 61
+        },
+        {
+          "stopId": "GGB225000392",
+          "name": "8단지덕유",
+          "latitude": 37.3562,
+          "longitude": 126.91775,
+          "stopSequence": 62
+        },
+        {
+          "stopId": "GGB225000393",
+          "name": "중앙도서관",
+          "latitude": 37.3568333,
+          "longitude": 126.9163,
+          "stopSequence": 63
+        },
+        {
+          "stopId": "GGB225000394",
+          "name": "8단지설악",
+          "latitude": 37.3580667,
+          "longitude": 126.9166333,
+          "stopSequence": 64
+        },
+        {
+          "stopId": "GGB225000413",
+          "name": "군포시평생학습마을",
+          "latitude": 37.3593,
+          "longitude": 126.9179833,
+          "stopSequence": 65
+        },
+        {
+          "stopId": "GGB225000414",
+          "name": "수리중학교",
+          "latitude": 37.3609333,
+          "longitude": 126.9193667,
+          "stopSequence": 66
+        },
+        {
+          "stopId": "GGB225000415",
+          "name": "수도사업소.e비즈니스고",
+          "latitude": 37.3619833,
+          "longitude": 126.91975,
+          "stopSequence": 67
+        },
+        {
+          "stopId": "GGB225000163",
+          "name": "궁내초등학교정문",
+          "latitude": 37.3643833,
+          "longitude": 126.9211,
+          "stopSequence": 68
+        },
+        {
+          "stopId": "GGB225000382",
+          "name": "9단지한양후문",
+          "latitude": 37.3658667,
+          "longitude": 126.9231833,
+          "stopSequence": 69
+        },
+        {
+          "stopId": "GGB225000384",
+          "name": "남천병원",
+          "latitude": 37.3646167,
+          "longitude": 126.9252167,
+          "stopSequence": 70
+        },
+        {
+          "stopId": "GGB225000072",
+          "name": "군포문화예술회관",
+          "latitude": 37.3672,
+          "longitude": 126.92785,
+          "stopSequence": 71
+        },
+        {
+          "stopId": "GGB225000238",
+          "name": "태을초등학교",
+          "latitude": 37.3714,
+          "longitude": 126.9271,
+          "stopSequence": 72
+        },
+        {
+          "stopId": "GGB225000359",
+          "name": "12단지목련후문",
+          "latitude": 37.3712833,
+          "longitude": 126.9286167,
+          "stopSequence": 73
+        },
+        {
+          "stopId": "GGB225000365",
+          "name": "목련삼거리",
+          "latitude": 37.3703,
+          "longitude": 126.92905,
+          "stopSequence": 74
+        },
+        {
+          "stopId": "GGB225000367",
+          "name": "모란.우방아파트",
+          "latitude": 37.3689333,
+          "longitude": 126.9305833,
+          "stopSequence": 75
+        },
+        {
+          "stopId": "GGB225000070",
+          "name": "우방아파트",
+          "latitude": 37.3684,
+          "longitude": 126.9310167,
+          "stopSequence": 76
+        },
+        {
+          "stopId": "GGB225000077",
+          "name": "군포문화예술회관",
+          "latitude": 37.3650667,
+          "longitude": 126.9291333,
+          "stopSequence": 77
+        },
+        {
+          "stopId": "GGB225000076",
+          "name": "중앙공원",
+          "latitude": 37.3635833,
+          "longitude": 126.9303667,
+          "stopSequence": 78
+        },
+        {
+          "stopId": "GGB225000089",
+          "name": "군포시청.군포시의회",
+          "latitude": 37.3605167,
+          "longitude": 126.9329667,
+          "stopSequence": 79
+        },
+        {
+          "stopId": "GGB225000052",
+          "name": "산본역",
+          "latitude": 37.3582,
+          "longitude": 126.9324,
+          "stopSequence": 80
+        },
+        {
+          "stopId": "GGB225000051",
+          "name": "주공2.3단지아파트입구",
+          "latitude": 37.3551667,
+          "longitude": 126.9332333,
+          "stopSequence": 81
+        },
+        {
+          "stopId": "GGB225000147",
+          "name": "3단지.율곡아파트",
+          "latitude": 37.3532333,
+          "longitude": 126.9327,
+          "stopSequence": 82
+        },
+        {
+          "stopId": "GGB225000146",
+          "name": "흥진고등학교",
+          "latitude": 37.3517333,
+          "longitude": 126.9299667,
+          "stopSequence": 83
+        },
+        {
+          "stopId": "GGB225000208",
+          "name": "금당터널입구.쌍용아파트",
+          "latitude": 37.3484,
+          "longitude": 126.9377333,
+          "stopSequence": 84
+        },
+        {
+          "stopId": "GGB225000183",
+          "name": "당동초등학교",
+          "latitude": 37.3471333,
+          "longitude": 126.9396667,
+          "stopSequence": 85
+        },
+        {
+          "stopId": "GGB225000197",
+          "name": "당동중학교",
+          "latitude": 37.3452833,
+          "longitude": 126.9383,
+          "stopSequence": 86
+        },
+        {
+          "stopId": "GGB225000184",
+          "name": "용호대림",
+          "latitude": 37.3436667,
+          "longitude": 126.9379833,
+          "stopSequence": 87
+        },
+        {
+          "stopId": "GGB225000187",
+          "name": "용호고등학교",
+          "latitude": 37.3422667,
+          "longitude": 126.9383167,
+          "stopSequence": 88
+        },
+        {
+          "stopId": "GGB225000420",
+          "name": "삼성주택단지앞",
+          "latitude": 37.3409833,
+          "longitude": 126.9365833,
+          "stopSequence": 89
+        },
+        {
+          "stopId": "GGB225000262",
+          "name": "삼성마을1단지.이마트트레이더스",
+          "latitude": 37.3409,
+          "longitude": 126.9347667,
+          "stopSequence": 90
+        },
+        {
+          "stopId": "GGB225000260",
+          "name": "신기초등학교후문",
+          "latitude": 37.3388167,
+          "longitude": 126.9320667,
+          "stopSequence": 91
+        },
+        {
+          "stopId": "GGB225000259",
+          "name": "신기초등학교정문",
+          "latitude": 37.3368667,
+          "longitude": 126.93335,
+          "stopSequence": 92
+        },
+        {
+          "stopId": "GGB225000075",
+          "name": "복합화물터미널후문.가족센터",
+          "latitude": 37.3356333,
+          "longitude": 126.9343,
+          "stopSequence": 93
+        },
+        {
+          "stopId": "GGB225000171",
+          "name": "삼성마을5단지",
+          "latitude": 37.33375,
+          "longitude": 126.9292,
+          "stopSequence": 94
+        },
+        {
+          "stopId": "GGB225000227",
+          "name": "군포공영차고지입구",
+          "latitude": 37.3310667,
+          "longitude": 126.92765,
+          "stopSequence": 95
+        },
+        {
+          "stopId": "GGB225000257",
+          "name": "군포복합화물터미널",
+          "latitude": 37.3299167,
+          "longitude": 126.9339667,
+          "stopSequence": 96
+        }
+      ]
+    },
+    {
+      "routeId": "GGB225000006",
+      "routeNumber": "31",
+      "routeType": "일반버스",
+      "stops": [
+        {
+          "stopId": "GGB225000194",
+          "name": "부곡버스공영차고지",
+          "latitude": 37.3210833,
+          "longitude": 126.9291333,
+          "stopSequence": 1
+        },
+        {
+          "stopId": "GGB225000430",
+          "name": "송부동행정복지센터.금강4단지",
+          "latitude": 37.317,
+          "longitude": 126.9240667,
+          "stopSequence": 2
+        },
+        {
+          "stopId": "GGB225000428",
+          "name": "송안초등학교",
+          "latitude": 37.3170167,
+          "longitude": 126.9208167,
+          "stopSequence": 3
+        },
+        {
+          "stopId": "GGB225000426",
+          "name": "금강1단지",
+          "latitude": 37.3164,
+          "longitude": 126.9188667,
+          "stopSequence": 4
+        },
+        {
+          "stopId": "GGB225000434",
+          "name": "송정지구입구",
+          "latitude": 37.3154167,
+          "longitude": 126.9173333,
+          "stopSequence": 5
+        },
+        {
+          "stopId": "GGB225000199",
+          "name": "대야미삼거리",
+          "latitude": 37.3269167,
+          "longitude": 126.9185333,
+          "stopSequence": 6
+        },
+        {
+          "stopId": "GGB225000198",
+          "name": "대야미역",
+          "latitude": 37.3276,
+          "longitude": 126.91725,
+          "stopSequence": 7
+        },
+        {
+          "stopId": "GGB225000188",
+          "name": "대야미역",
+          "latitude": 37.3272,
+          "longitude": 126.9173833,
+          "stopSequence": 8
+        },
+        {
+          "stopId": "GGB225000189",
+          "name": "대야미입구",
+          "latitude": 37.3267333,
+          "longitude": 126.9185,
+          "stopSequence": 9
+        },
+        {
+          "stopId": "GGB225000107",
+          "name": "대야미삼거리",
+          "latitude": 37.3261167,
+          "longitude": 126.9190167,
+          "stopSequence": 10
+        },
+        {
+          "stopId": "GGB225000433",
+          "name": "구반월입구",
+          "latitude": 37.3224833,
+          "longitude": 126.91675,
+          "stopSequence": 11
+        },
+        {
+          "stopId": "GGB225000435",
+          "name": "송정지구입구",
+          "latitude": 37.3152,
+          "longitude": 126.9174,
+          "stopSequence": 12
+        },
+        {
+          "stopId": "GGB225000425",
+          "name": "금강1단지",
+          "latitude": 37.316,
+          "longitude": 126.9187833,
+          "stopSequence": 13
+        },
+        {
+          "stopId": "GGB225000427",
+          "name": "송안초등학교",
+          "latitude": 37.3166833,
+          "longitude": 126.9202667,
+          "stopSequence": 14
+        },
+        {
+          "stopId": "GGB225000429",
+          "name": "송부동행정복지센터.금강4단지",
+          "latitude": 37.31675,
+          "longitude": 126.9239,
+          "stopSequence": 15
+        },
+        {
+          "stopId": "GGB225000249",
+          "name": "부곡버스공영차고지",
+          "latitude": 37.3210167,
+          "longitude": 126.9293167,
+          "stopSequence": 16
+        },
+        {
+          "stopId": "GGB225000232",
+          "name": "군포부곡도서관",
+          "latitude": 37.3226667,
+          "longitude": 126.9345,
+          "stopSequence": 17
+        },
+        {
+          "stopId": "GGB225000230",
+          "name": "부곡중앙중.군포중앙고등학교",
+          "latitude": 37.3230333,
+          "longitude": 126.9372833,
+          "stopSequence": 18
+        },
+        {
+          "stopId": "GGB225000218",
+          "name": "부곡3단지아파트",
+          "latitude": 37.3240167,
+          "longitude": 126.94005,
+          "stopSequence": 19
+        },
+        {
+          "stopId": "GGB225000241",
+          "name": "부곡지구입구",
+          "latitude": 37.32525,
+          "longitude": 126.9400167,
+          "stopSequence": 20
+        },
+        {
+          "stopId": "GGB225000224",
+          "name": "군포첨단산업단지",
+          "latitude": 37.32655,
+          "longitude": 126.9394833,
+          "stopSequence": 21
+        },
+        {
+          "stopId": "GGB225000226",
+          "name": "한국복합물류",
+          "latitude": 37.3293833,
+          "longitude": 126.93625,
+          "stopSequence": 22
+        },
+        {
+          "stopId": "GGB225000228",
+          "name": "군포공영차고지",
+          "latitude": 37.3318,
+          "longitude": 126.9275833,
+          "stopSequence": 23
+        },
+        {
+          "stopId": "GGB225000010",
+          "name": "군포보건소",
+          "latitude": 37.3341833,
+          "longitude": 126.9262333,
+          "stopSequence": 24
+        },
+        {
+          "stopId": "GGB225000138",
+          "name": "수리산역",
+          "latitude": 37.3490667,
+          "longitude": 126.9257167,
+          "stopSequence": 25
+        },
+        {
+          "stopId": "GGB225000050",
+          "name": "군포소방서",
+          "latitude": 37.35125,
+          "longitude": 126.9263333,
+          "stopSequence": 26
+        },
+        {
+          "stopId": "GGB225000047",
+          "name": "산본역",
+          "latitude": 37.3578667,
+          "longitude": 126.9336333,
+          "stopSequence": 27
+        },
+        {
+          "stopId": "GGB225000116",
+          "name": "군포시청.군포시의회",
+          "latitude": 37.3603,
+          "longitude": 126.9336167,
+          "stopSequence": 28
+        },
+        {
+          "stopId": "GGB225000086",
+          "name": "11단지주공아파트",
+          "latitude": 37.36445,
+          "longitude": 126.9340333,
+          "stopSequence": 29
+        },
+        {
+          "stopId": "GGB225000085",
+          "name": "산본래미안아파트",
+          "latitude": 37.3683167,
+          "longitude": 126.93685,
+          "stopSequence": 30
+        },
+        {
+          "stopId": "GGB225000128",
+          "name": "삼성아파트입구",
+          "latitude": 37.3702833,
+          "longitude": 126.9399667,
+          "stopSequence": 31
+        },
+        {
+          "stopId": "GGB225000127",
+          "name": "금정역",
+          "latitude": 37.3717833,
+          "longitude": 126.9422,
+          "stopSequence": 32
+        },
+        {
+          "stopId": "GGB225000126",
+          "name": "산본1동",
+          "latitude": 37.3737667,
+          "longitude": 126.9423833,
+          "stopSequence": 33
+        },
+        {
+          "stopId": "GGB225000345",
+          "name": "관모초교입구",
+          "latitude": 37.3752,
+          "longitude": 126.9390667,
+          "stopSequence": 34
+        },
+        {
+          "stopId": "GGB225000095",
+          "name": "13단지아파트입구",
+          "latitude": 37.3712833,
+          "longitude": 126.9344667,
+          "stopSequence": 35
+        },
+        {
+          "stopId": "GGB225000071",
+          "name": "산본2동행정복지센터",
+          "latitude": 37.37015,
+          "longitude": 126.9330833,
+          "stopSequence": 36
+        },
+        {
+          "stopId": "GGB225000368",
+          "name": "모란.우방아파트",
+          "latitude": 37.3694167,
+          "longitude": 126.93025,
+          "stopSequence": 37
+        },
+        {
+          "stopId": "GGB225000366",
+          "name": "목련삼거리",
+          "latitude": 37.3703333,
+          "longitude": 126.9293,
+          "stopSequence": 38
+        },
+        {
+          "stopId": "GGB225000364",
+          "name": "능안공원",
+          "latitude": 37.3714667,
+          "longitude": 126.9300333,
+          "stopSequence": 39
+        },
+        {
+          "stopId": "GGB225000362",
+          "name": "개나리아파트",
+          "latitude": 37.3725333,
+          "longitude": 126.93095,
+          "stopSequence": 40
+        },
+        {
+          "stopId": "GGB225000215",
+          "name": "14단지아파트사거리",
+          "latitude": 37.3727,
+          "longitude": 126.93665,
+          "stopSequence": 41
+        },
+        {
+          "stopId": "GGB225000216",
+          "name": "산본1동행정복지센터",
+          "latitude": 37.3740833,
+          "longitude": 126.9382667,
+          "stopSequence": 42
+        },
+        {
+          "stopId": "GGB225000157",
+          "name": "산본고가도로",
+          "latitude": 37.3758333,
+          "longitude": 126.9409833,
+          "stopSequence": 43
+        },
+        {
+          "stopId": "GGB225000156",
+          "name": "산본1동",
+          "latitude": 37.3737833,
+          "longitude": 126.942,
+          "stopSequence": 44
+        },
+        {
+          "stopId": "GGB225000007",
+          "name": "금정역",
+          "latitude": 37.3720667,
+          "longitude": 126.942,
+          "stopSequence": 45
+        },
+        {
+          "stopId": "GGB225000155",
+          "name": "산본1동입구",
+          "latitude": 37.3705333,
+          "longitude": 126.93955,
+          "stopSequence": 46
+        },
+        {
+          "stopId": "GGB225000091",
+          "name": "산본래미안아파트",
+          "latitude": 37.3686667,
+          "longitude": 126.9368167,
+          "stopSequence": 47
+        },
+        {
+          "stopId": "GGB225000090",
+          "name": "늘푸른노인복지관",
+          "latitude": 37.3639,
+          "longitude": 126.93335,
+          "stopSequence": 48
+        },
+        {
+          "stopId": "GGB225000089",
+          "name": "군포시청.군포시의회",
+          "latitude": 37.3605167,
+          "longitude": 126.9329667,
+          "stopSequence": 49
+        },
+        {
+          "stopId": "GGB225000052",
+          "name": "산본역",
+          "latitude": 37.3582,
+          "longitude": 126.9324,
+          "stopSequence": 50
+        },
+        {
+          "stopId": "GGB225000144",
+          "name": "5단지아파트입구",
+          "latitude": 37.35115,
+          "longitude": 126.9259667,
+          "stopSequence": 51
+        },
+        {
+          "stopId": "GGB225000143",
+          "name": "수리산역.5단지",
+          "latitude": 37.3499167,
+          "longitude": 126.9255833,
+          "stopSequence": 52
+        },
+        {
+          "stopId": "GGB225000006",
+          "name": "군포보건소",
+          "latitude": 37.3341167,
+          "longitude": 126.9259833,
+          "stopSequence": 53
+        },
+        {
+          "stopId": "GGB225000227",
+          "name": "군포공영차고지입구",
+          "latitude": 37.3310667,
+          "longitude": 126.92765,
+          "stopSequence": 54
+        },
+        {
+          "stopId": "GGB225000225",
+          "name": "한국복합물류",
+          "latitude": 37.3292,
+          "longitude": 126.9363667,
+          "stopSequence": 55
+        },
+        {
+          "stopId": "GGB225000223",
+          "name": "군포첨단산업단지",
+          "latitude": 37.3267333,
+          "longitude": 126.9390167,
+          "stopSequence": 56
+        },
+        {
+          "stopId": "GGB225000242",
+          "name": "부곡지구입구",
+          "latitude": 37.3257,
+          "longitude": 126.9397667,
+          "stopSequence": 57
+        },
+        {
+          "stopId": "GGB225000217",
+          "name": "부곡3단지아파트",
+          "latitude": 37.3240667,
+          "longitude": 126.9397667,
+          "stopSequence": 58
+        },
+        {
+          "stopId": "GGB225000229",
+          "name": "부곡중앙중.군포중앙고등학교",
+          "latitude": 37.3231833,
+          "longitude": 126.9373167,
+          "stopSequence": 59
+        },
+        {
+          "stopId": "GGB225000231",
+          "name": "군포부곡도서관",
+          "latitude": 37.3228333,
+          "longitude": 126.9344833,
+          "stopSequence": 60
+        },
+        {
+          "stopId": "GGB225000194",
+          "name": "부곡버스공영차고지",
+          "latitude": 37.3210833,
+          "longitude": 126.9291333,
+          "stopSequence": 61
+        },
+        {
+          "stopId": "GGB225000430",
+          "name": "송부동행정복지센터.금강4단지",
+          "latitude": 37.317,
+          "longitude": 126.9240667,
+          "stopSequence": 62
+        },
+        {
+          "stopId": "GGB225000428",
+          "name": "송안초등학교",
+          "latitude": 37.3170167,
+          "longitude": 126.9208167,
+          "stopSequence": 63
+        },
+        {
+          "stopId": "GGB225000426",
+          "name": "금강1단지",
+          "latitude": 37.3164,
+          "longitude": 126.9188667,
+          "stopSequence": 64
+        },
+        {
+          "stopId": "GGB225000434",
+          "name": "송정지구입구",
+          "latitude": 37.3154167,
+          "longitude": 126.9173333,
+          "stopSequence": 65
+        },
+        {
+          "stopId": "GGB225000199",
+          "name": "대야미삼거리",
+          "latitude": 37.3269167,
+          "longitude": 126.9185333,
+          "stopSequence": 66
+        },
+        {
+          "stopId": "GGB225000198",
+          "name": "대야미역",
+          "latitude": 37.3276,
+          "longitude": 126.91725,
+          "stopSequence": 67
+        },
+        {
+          "stopId": "GGB225000188",
+          "name": "대야미역",
+          "latitude": 37.3272,
+          "longitude": 126.9173833,
+          "stopSequence": 68
+        },
+        {
+          "stopId": "GGB225000107",
+          "name": "대야미삼거리",
+          "latitude": 37.3261167,
+          "longitude": 126.9190167,
+          "stopSequence": 69
+        },
+        {
+          "stopId": "GGB225000433",
+          "name": "구반월입구",
+          "latitude": 37.3224833,
+          "longitude": 126.91675,
+          "stopSequence": 70
+        },
+        {
+          "stopId": "GGB225000435",
+          "name": "송정지구입구",
+          "latitude": 37.3152,
+          "longitude": 126.9174,
+          "stopSequence": 71
+        },
+        {
+          "stopId": "GGB225000425",
+          "name": "금강1단지",
+          "latitude": 37.316,
+          "longitude": 126.9187833,
+          "stopSequence": 72
+        },
+        {
+          "stopId": "GGB225000427",
+          "name": "송안초등학교",
+          "latitude": 37.3166833,
+          "longitude": 126.9202667,
+          "stopSequence": 73
+        },
+        {
+          "stopId": "GGB225000429",
+          "name": "송부동행정복지센터.금강4단지",
+          "latitude": 37.31675,
+          "longitude": 126.9239,
+          "stopSequence": 74
+        },
+        {
+          "stopId": "GGB225000249",
+          "name": "부곡버스공영차고지",
+          "latitude": 37.3210167,
+          "longitude": 126.9293167,
+          "stopSequence": 75
+        }
+      ]
+    }
+  ]
+}

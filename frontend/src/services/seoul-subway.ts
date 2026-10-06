@@ -6,6 +6,9 @@ export type Arrival = {
   message: string;
   seconds: number | null;
   receivedAt: string;
+  arrivalCode?: string | null;
+  terminalName?: string | null;
+  express?: boolean | null;
 };
 
 export const lineIds: Record<string, string> = {
@@ -33,6 +36,9 @@ export function parseArrivals(payload: unknown, line: string, now = Date.now()):
       direction: String(row.updnLine ?? ''), destination: String(row.trainLineNm ?? ''),
       message: String(row.arvlMsg2 ?? ''), receivedAt: row.recptnDt,
       seconds: Number.isFinite(seconds) && seconds >= 0 ? Math.max(0, seconds - Math.max(0, Math.floor((now - received) / 1000))) : null,
+      arrivalCode: row.arvlCd == null ? null : String(row.arvlCd),
+      terminalName: typeof row.bstatnNm === 'string' ? row.bstatnNm.trim() || null : null,
+      express: row.btrainSttus == null ? null : ['급행', '특급'].includes(String(row.btrainSttus)),
     }];
   });
 }

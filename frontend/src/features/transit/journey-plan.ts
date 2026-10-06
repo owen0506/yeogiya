@@ -37,6 +37,11 @@ export type RideLeg = Readonly<{
   from: JourneyStop;
   to: JourneyStop;
   stops: readonly JourneyStop[];
+  // Ordered provider occurrences before boarding, through the alighting stop.
+  // Negative offsets are estimates relative to the boarding stop, not Trip times.
+  approachStops?: readonly JourneyStop[];
+  // Retains the selected ride's boarding occurrence when an onboard replan starts later.
+  boardingSequence?: number;
   planned: PlannedTiming;
 }>;
 
@@ -72,6 +77,9 @@ export type JourneyPlan = Readonly<{
   source: 'OFFICIAL_TIMETABLE' | 'TIMETABLE' | 'ESTIMATE';
   departureAt?: string | null;
   arrivalAt?: string | null;
+  notes?: readonly string[];
+  includesAccessAndWaiting?: boolean;
+  transferCount?: number;
 }>;
 
 // A realtime run reference is not a timetable Trip or a physical vehicle ID.

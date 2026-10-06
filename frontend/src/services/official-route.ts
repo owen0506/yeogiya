@@ -74,7 +74,7 @@ export function parseOfficialRoute(value: unknown, from: Station, to: Station): 
   return { steps, seconds, stops: steps.length - 1 - transfers, transfers, official: { distanceMeters: meters, departureAt: new Date(start).toISOString(), arrivalAt: new Date(current).toISOString(), searchedAt, fetchedAt, firstTrain: String(first.trainno ?? ''), destination: String(first.tmnlStnNm ?? '') } };
 }
 
-export async function getOfficialRoute(from: Station, to: Station, preference: 'fastest' | 'fewest-transfers', signal?: AbortSignal): Promise<JourneyRoute> {
+export async function getOfficialRoute(from: Station, to: Station, preference: 'fastest' | 'fewest-transfers', signal?: AbortSignal, departureAt?: string): Promise<JourneyRoute> {
   const base = process.env.EXPO_PUBLIC_SUBWAY_API_BASE_URL;
   if (!base) throw new Error('공식 경로 연결이 설정되지 않았습니다.');
   const controller = new AbortController();
@@ -84,6 +84,10 @@ export async function getOfficialRoute(from: Station, to: Station, preference: '
   const timeout = setTimeout(abort, 15000);
   try {
     const query = new URLSearchParams({ from: interchangeName(from.name), to: interchangeName(to.name), preference });
+    if (departureAt !== undefined) {
+      if (!Number.isFinite(Date.parse(departureAt))) throw new Error('출발 시각이 올바르지 않습니다.');
+      query.set('departureAt', departureAt);
+    }
     const response = await fetch(`${base.replace(/\/$/, '')}/route?${query}`, { signal: controller.signal });
     if (!response.ok) throw new Error('공식 경로를 가져오지 못했습니다.');
     return parseOfficialRoute(await response.json(), from, to);

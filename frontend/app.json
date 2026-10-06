@@ -27,13 +27,24 @@
       "expo-router",
       "expo-notifications",
       [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "현재 위치를 출발지나 목적지로 선택하고 가까운 지하철역을 찾기 위해 위치를 사용합니다.",
+          "locationAlwaysPermission": false,
+          "locationAlwaysAndWhenInUsePermission": false,
+          "motionUsagePermission": false
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "backgroundColor": "#16875B",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      "expo-image",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

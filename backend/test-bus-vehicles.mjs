@@ -66,6 +66,19 @@ test('pagination is bounded and explicitly marks incomplete coverage', async () 
   assert.deepEqual(result.vehicles.map(vehicle => vehicle.stopSequence), Array.from({ length: 17 }, (_, index) => index + 4));
 });
 
+test('a Gunpo ride includes captured vehicles beyond boarding +8 through its alighting occurrence', async () => {
+  const captured = JSON.parse(readFileSync(new URL('./fixtures/tago-gunpo-locations-GGB225000009.json', import.meta.url), 'utf8'));
+  const raw = captured.pages[0].raw;
+  const params = new URLSearchParams({ cityCode: '31160', routeId: 'GGB225000009', nearSequence: '9', toSequence: '47' });
+  const result = await fetchBusVehicles(params, config, async () => ok(raw));
+  const expected = raw.response.body.items.item.filter(row => row.nodeord >= 1 && row.nodeord <= 47);
+  assert.deepEqual(result.sequenceRange, { from: 1, to: 47 });
+  assert.ok(result.vehicles.some(vehicle => vehicle.stopSequence > 17));
+  assert.ok(result.vehicles.every(vehicle => vehicle.stopSequence <= 47));
+  assert.equal(result.vehicles.length, expected.length);
+  assert.equal(result.coverage.partial, false);
+});
+
 test('dense nearby vehicle reports are capped and marked partial', async () => {
   const base = fixture.raw.response.body.items.item[0];
   const raw = { response: {
@@ -87,6 +100,10 @@ test('invalid query and missing configuration fail before contacting TAGO', asyn
     new URLSearchParams({ cityCode: '23', routeId: 'not a route', nearSequence: '12' }),
     new URLSearchParams({ cityCode: '23', routeId: 'ICB161000002', nearSequence: '0' }),
     new URLSearchParams('cityCode=23&cityCode=24&routeId=ICB161000002&nearSequence=12'),
+    new URLSearchParams('cityCode=23&routeId=ICB161000002&nearSequence=12&toSequence=11'),
+    new URLSearchParams('cityCode=23&routeId=ICB161000002&nearSequence=12&toSequence='),
+    new URLSearchParams('cityCode=23&routeId=ICB161000002&nearSequence=12&toSequence=20&toSequence=30'),
+    new URLSearchParams('cityCode=23&routeId=ICB161000002&nearSequence=12&toSequence=10000'),
   ]) await assert.rejects(fetchBusVehicles(params, config, never), /BUS_VEHICLES_INVALID_QUERY/);
   await assert.rejects(fetchBusVehicles(query, {}, never), /TAGO_BUS_MISSING_TAGO_BUS_API_KEY/);
   await assert.rejects(fetchBusVehicles(query, { TAGO_BUS_API_KEY: 'secret' }, never), /TAGO_BUS_MISSING_TAGO_BUS_LOCATION_ENDPOINT/);
@@ -108,6 +125,9 @@ test('HTTP endpoint validates the request and does not echo secrets', async () =
     const response = await fetch(`http://127.0.0.1:${address.port}/bus-vehicles?cityCode=23&routeId=bad%20route&nearSequence=12`);
     assert.equal(response.status, 400);
     assert.deepEqual(await response.json(), { error: 'INVALID_QUERY' });
+    const invalidRange = await fetch(`http://127.0.0.1:${address.port}/bus-vehicles?cityCode=31160&routeId=GGB225000009&nearSequence=9&toSequence=8`);
+    assert.equal(invalidRange.status, 400);
+    assert.deepEqual(await invalidRange.json(), { error: 'INVALID_QUERY' });
   } finally {
     await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
   }

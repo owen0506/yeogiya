@@ -92,4 +92,20 @@ export function searchStations(query: string, line?: string): readonly Station[]
     [station.name, ...station.aliases].some((name) => normalize(name).includes(term)));
 }
 
-export type StationFieldValue = { query: string; station: Station | null };
+export type StationFieldLocation = Readonly<{
+  latitude: number;
+  longitude: number;
+  accuracyMeters: number | null;
+  observedAt: string;
+  distanceMeters: number;
+  connectionStationSelected?: boolean;
+}>;
+
+export type NearbyStation = Readonly<{ station: Station; distanceMeters: number }>;
+
+export type StationFieldValue = {
+  query: string;
+  station: Station | null;
+  currentLocation?: StationFieldLocation;
+  nearbyStations?: readonly NearbyStation[];
+};

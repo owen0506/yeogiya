@@ -261,6 +261,7 @@ test('공식 경로 클라이언트는 비공개 키 없이 중계 서버를 사
   const oldFetch = global.fetch, oldBase = process.env.EXPO_PUBLIC_SUBWAY_API_BASE_URL;
   process.env.EXPO_PUBLIC_SUBWAY_API_BASE_URL = 'http://localhost:8083';
   try {
+    let expectedDepartureAt = null;
     global.fetch = async (url) => {
       const request = new URL(url);
       assert.equal(request.pathname, '/route');
@@ -268,9 +269,12 @@ test('공식 경로 클라이언트는 비공개 키 없이 중계 서버를 사
       assert.equal(request.searchParams.get('to'), '이수');
       assert.equal(request.searchParams.get('preference'), 'fewest-transfers');
       assert.equal(request.searchParams.has('serviceKey'), false);
+      assert.equal(request.searchParams.get('departureAt'), expectedDepartureAt);
       return { ok: true, json: async () => officialFixture('geumjeong-isu') };
     };
     assert.equal((await getOfficialRoute(getStationByName('금정'),getStationByName('이수'),'fewest-transfers')).seconds, 1590);
+    expectedDepartureAt = '2026-10-06T15:05:00.000Z';
+    assert.equal((await getOfficialRoute(getStationByName('금정'),getStationByName('이수'),'fewest-transfers', undefined, expectedDepartureAt)).seconds, 1590);
     global.fetch = async () => ({ ok: false });
     await assert.rejects(getOfficialRoute(getStationByName('금정'),getStationByName('이수'),'fastest'));
   } finally {

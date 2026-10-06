@@ -37,15 +37,17 @@ test('route adapter preserves ordered ride stops, transfer timing, and planned o
   }
 });
 
-test('corridor extends only one known direction and does not invent a branch predecessor', () => {
+test('a circular corridor includes approaching stations once and ends at the alighting station', () => {
   const route = findRoute('mock-2-gangnam', 'mock-2-samseong');
   const leg = createJourneyPlan(route).legs[0];
-  const corridor = getSubwayCorridor(leg, 2);
-  assert.deepEqual(corridor.map(stop => [stop.name, stop.relativeStopIndex]), [
-    ['서초', -2], ['교대', -1], ['강남', 0], ['역삼', 1], ['선릉', 2],
+  const corridor = getSubwayCorridor(leg);
+  assert.equal(corridor[0].name, '종합운동장');
+  assert.equal(new Set(corridor.map(stop => stop.name)).size, corridor.length);
+  assert.deepEqual(corridor.slice(-6).map(stop => [stop.name, stop.relativeStopIndex]), [
+    ['서초', -2], ['교대', -1], ['강남', 0], ['역삼', 1], ['선릉', 2], ['삼성', 3],
   ]);
   const ambiguous = { ...leg, stops: [leg.stops[0], { ...leg.stops[1], name: '시청' }] };
-  assert.deepEqual(getSubwayCorridor(ambiguous, 3).map(stop => stop.relativeStopIndex), [0, 1]);
+  assert.deepEqual(getSubwayCorridor(ambiguous).map(stop => stop.relativeStopIndex), [0, 1]);
 });
 
 test('equally long legs on one line retain distinct identities for vehicle and alarm association', () => {
@@ -65,14 +67,14 @@ test('fresh observed train positions become candidates without a fabricated Trip
   const positions = parseSubwayPositions({
     errorMessage: { code: 'INFO-000' },
     realtimePositionList: [
-      { subwayId: '1002', trainNo: '2336', statnNm: '역삼', recptnDt: '2026-10-02 08:09:00', trainSttus: '1' },
+      { subwayId: '1002', trainNo: '2336', statnNm: '역삼', recptnDt: '2026-10-02 08:09:00', trainSttus: '1', updnLine: '1', statnTnm: '성수' },
       { subwayId: '1002', trainNo: 'old', statnNm: '역삼', recptnDt: '2026-10-02 08:00:00' },
       { subwayId: '1001', trainNo: 'other', statnNm: '역삼', recptnDt: '2026-10-02 08:09:00' },
     ],
   }, '2호선', now);
   assert.equal(positions.length, 1);
   assert.deepEqual(parseSubwayPositions({ RESULT: { CODE: 'INFO-200' } }, '2호선', now), []);
-  const arrivals = [{ trainId: '2336', lineId: '1002', direction: '내선', destination: '성수행', message: '전역 출발', seconds: 90, receivedAt: '2026-10-02 08:09:00' }];
+  const arrivals = [{ trainId: '2336', lineId: '1002', direction: '외선', destination: '성수행', message: '전역 출발', seconds: 90, receivedAt: '2026-10-02 08:09:00' }];
   const candidates = mergeSubwayVehicleCandidates(leg, arrivals, positions, new Date(now).toISOString());
   assert.equal(candidates.length, 1);
   assert.equal(candidates[0].trainId, '2336');
