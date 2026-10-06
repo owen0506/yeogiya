@@ -4,7 +4,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { StationSearchField } from '../stations/station-search-field';
 import type { Station, StationFieldValue } from '../stations/stations';
 import stationLocationData from '../stations/station-locations.json';
-import { findNearbyStations, formatNearbyDistance } from '../stations/nearby-stations';
+import { findNearbyStations } from '../stations/nearby-stations';
 import { CurrentLocationError, getCurrentLocation } from '../../services/current-location';
 import { AlarmStatus } from '../notifications/alarm-status';
 import { AlarmDialog } from '../notifications/alarm-dialog';
@@ -14,8 +14,9 @@ import { loadSegmentTimes } from '../../services/segment-times';
 import { findRoute, type JourneyRoute } from './route-service';
 import { defaultRouteCostProvider } from './route-costs';
 import { RouteResultScreen, type LiveCandidate } from './route-result-screen';
-import { createJourneyPlan, type JourneyPlan, type JourneyStop, type RideLeg, type SelectedRide } from '../transit/journey-plan';
-import { findGunpoJourney, type GunpoNetwork, type GunpoArrivalSnapshot, type GunpoFixedBus } from '../transit/gunpo-routing';
+import { type JourneyPlan, type RideLeg, type SelectedRide } from '../transit/journey-plan';
+import { findGunpoJourney, type GunpoJourneyQuery, type GunpoNetwork, type GunpoArrivalSnapshot, type GunpoFixedBus } from '../transit/gunpo-routing';
+import { canSearchEndpoints, endpointCoordinate, endpointName, findPlaceJourney, isCoordinateEndpoint } from '../transit/place-routing';
 import { estimateGunpoRideSeconds, getGunpoArrivals, getGunpoNetwork } from '../../services/gunpo-bus';
 import { Action, palette, TrainIcon, ui } from './journey-ui';
 
@@ -23,33 +24,15 @@ const empty: StationFieldValue = { query: '', station: null };
 type Tab = 'search' | 'route' | 'alarms';
 type EndpointField = 'departure' | 'arrival';
 type LocationIssue = Readonly<{ message: string; canOpenSettings: boolean }>;
+type ConnectionOptions = 'departureAt' | 'signal' | 'getSubwayRoute' | 'rideSeconds' | 'stationCoordinates' | 'fixedBus';
+type ConnectionSearch =
+  | { mode: 'places'; query: Omit<Parameters<typeof findPlaceJourney>[0], ConnectionOptions> }
+  | { mode: 'gunpo'; query: Omit<GunpoJourneyQuery, ConnectionOptions> };
 const tabs: readonly { id: Tab; label: string }[] = [
   { id: 'search', label: '길찾기' },
   { id: 'route', label: '내 여정' },
   { id: 'alarms', label: '알림' },
 ];
-
-function fieldCoordinate(field: StationFieldValue) {
-  if (field.currentLocation) return { latitude: field.currentLocation.latitude, longitude: field.currentLocation.longitude };
-  return stationLocationData.points.find(point => point.stationId === field.station?.id) ?? null;
-}
-
-function withDestinationWalk(plan: JourneyPlan, field: StationFieldValue): JourneyPlan {
-  if (!field.currentLocation || !field.station || field.currentLocation.distanceMeters < 10) return plan;
-  const seconds = Math.ceil(field.currentLocation.distanceMeters * 1.25 / 1.2);
-  const previous = plan.legs.at(-1)?.to;
-  const from: JourneyStop = previous ?? { id: field.station.id, name: field.station.name, platformId: null,
-    providerStopId: null, serviceSequence: null, sequence: 0, plannedOffsetSeconds: 0 };
-  const to: JourneyStop = { id: 'current-location:destination', name: '내 위치', platformId: null,
-    providerStopId: null, serviceSequence: null, sequence: 1, plannedOffsetSeconds: seconds };
-  const departureAt = plan.arrivalAt ?? null;
-  const arrivalAt = departureAt ? new Date(Date.parse(departureAt) + seconds * 1000).toISOString() : null;
-  return { ...plan, totalSeconds: plan.totalSeconds + seconds, arrivalAt, source: 'ESTIMATE',
-    notes: [...(plan.notes ?? []), '목적지까지 도보 시간은 직선 거리에 여유를 더한 추정값이에요.'],
-    legs: [...plan.legs, { id: `walk:destination:${field.station.id}`, kind: 'WALK', from, to,
-      planned: { startOffsetSeconds: plan.totalSeconds, endOffsetSeconds: plan.totalSeconds + seconds,
-        durationSeconds: seconds, departureAt, arrivalAt, source: 'ESTIMATE' } }] };
-}
 
 export default function HomeScreen() {
   const { width } = useWindowDimensions();
@@ -72,7 +55,7 @@ export default function HomeScreen() {
   const [journeyKey, setJourneyKey] = useState(0);
   const [reconnecting, setReconnecting] = useState(false);
   const gunpoNetwork = useRef<GunpoNetwork | null>(null);
-  const gunpoSearch = useRef<{ origin: { latitude: number; longitude: number; name: string; stationId?: string; connectionStationId?: string; isCurrentLocation: boolean }; destination: Station; network: GunpoNetwork; arrivals: readonly GunpoArrivalSnapshot[]; preference: 'fastest' | 'fewest-transfers' } | null>(null);
+  const connectionSearch = useRef<ConnectionSearch | null>(null);
   const reconnectRequest = useRef<AbortController | null>(null);
   const [preference, setPreference] = useState<'fastest' | 'fewest-transfers'>('fastest');
   const [routeError, setRouteError] = useState<string | null>(null);
@@ -111,9 +94,10 @@ export default function HomeScreen() {
     return () => controller.abort();
   }, []);
 
-  const sameStation = departure.station != null && departure.station.id === arrival.station?.id;
-  const canSearch = Boolean((departure.station || departure.currentLocation) && arrival.station
-    && (!sameStation || departure.currentLocation) && locatingField === null);
+  const sameStation = !isCoordinateEndpoint(departure) && !isCoordinateEndpoint(arrival)
+    && departure.station != null && departure.station.id === arrival.station?.id;
+  const canSearch = canSearchEndpoints(departure, arrival) && locatingField === null;
+  const hasCoordinateEndpoint = isCoordinateEndpoint(departure) || isCoordinateEndpoint(arrival);
   const hasJourney = !!(route || journeyPlan);
   const hideBottomNav = keyboardVisible || activeField !== null;
   const resultsMaxHeight = Math.max(96, Math.min(320, searchViewportHeight - 100));
@@ -166,7 +150,7 @@ export default function HomeScreen() {
     reconnectRequest.current?.abort();
     reconnectRequest.current = null;
     setReconnecting(false);
-    gunpoSearch.current = null;
+    connectionSearch.current = null;
   }
 
   function cancelLocation(field?: EndpointField) {
@@ -258,8 +242,8 @@ export default function HomeScreen() {
     }
   }
 
-  async function searchRoute(from: Station | null = departure.station, to: Station | null = arrival.station, selectedPreference = preference) {
-    if (!to || (!from && !departure.currentLocation) || (from?.id === to.id && !departure.currentLocation)) return;
+  async function searchRoute(selectedPreference = preference) {
+    if (!canSearchEndpoints(departure, arrival)) return;
     finishEditing();
     cancelRoute();
     const controller = new AbortController();
@@ -271,21 +255,20 @@ export default function HomeScreen() {
     let result: JourneyRoute | null = null;
     let resultPlan: JourneyPlan | null = null;
     try {
-      const coordinate = fieldCoordinate(departure);
+      const from = departure.station;
+      const to = arrival.station;
+      const coordinate = endpointCoordinate(departure);
+      const coordinateSearch = isCoordinateEndpoint(departure) || isCoordinateEndpoint(arrival);
       const pilotStation = from && ['station-금정', 'station-산본', 'station-군포', 'station-당정', 'station-수리산', 'station-대야미'].includes(from.id);
-      if (coordinate && (departure.currentLocation || (includeGunpoBuses && pilotStation))) {
-        const origin = { latitude: coordinate.latitude, longitude: coordinate.longitude,
-          name: departure.currentLocation ? '내 위치' : from!.name, stationId: from?.id,
-          connectionStationId: departure.currentLocation?.connectionStationSelected ? from?.id : undefined,
-          isCurrentLocation: !!departure.currentLocation };
+      if (coordinateSearch || (coordinate && includeGunpoBuses && pilotStation)) {
         let network: GunpoNetwork = { providerId: 'tago', cityCode: '31160', fetchedAt: new Date().toISOString(), routes: [] };
         let arrivals: readonly GunpoArrivalSnapshot[] = [];
         let notice: string | null = null;
-        if (includeGunpoBuses) {
+        if (includeGunpoBuses && coordinate) {
           try {
             network = gunpoNetwork.current ?? await getGunpoNetwork(controller.signal);
             gunpoNetwork.current = network;
-            const live = await getGunpoArrivals(network, origin, controller.signal);
+            const live = await getGunpoArrivals(network, coordinate, controller.signal);
             arrivals = live.snapshots;
             if (live.failed) notice = '일부 버스 도착정보를 확인하지 못해 확인 가능한 경로만 비교했어요.';
           } catch {
@@ -293,24 +276,30 @@ export default function HomeScreen() {
             notice = '군포 버스 정보를 확인하지 못해 지하철 연결을 먼저 안내해요.';
           }
         }
-        resultPlan = await findGunpoJourney({ origin, destination: to, network, arrivals,
-          departureAt: new Date().toISOString(), preference: selectedPreference, signal: controller.signal,
-          getSubwayRoute: subwayAt, rideSeconds: estimateGunpoRideSeconds, stationCoordinates: stationLocationData.points });
+        const options = { departureAt: new Date().toISOString(), signal: controller.signal,
+          getSubwayRoute: subwayAt, rideSeconds: estimateGunpoRideSeconds, stationCoordinates: stationLocationData.points };
+        let context: ConnectionSearch;
+        if (coordinateSearch) {
+          context = { mode: 'places', query: { originField: departure, destinationField: arrival,
+            network, arrivals, preference: selectedPreference } };
+          resultPlan = await findPlaceJourney({ ...context.query, ...options });
+        } else {
+          context = { mode: 'gunpo', query: { origin: { latitude: coordinate!.latitude, longitude: coordinate!.longitude,
+            name: from!.name, stationId: from!.id, isCurrentLocation: false }, destination: to!,
+            network, arrivals, preference: selectedPreference } };
+          resultPlan = await findGunpoJourney({ ...context.query, ...options });
+        }
         if (resultPlan) {
-          resultPlan = withDestinationWalk(resultPlan, arrival);
-          gunpoSearch.current = { origin, destination: to, network, arrivals, preference: selectedPreference };
+          if (controller.signal.aborted || routeRequest.current !== controller) return;
+          connectionSearch.current = context;
           if (notice) resultPlan = { ...resultPlan, notes: [...(resultPlan.notes ?? []), notice] };
         }
       }
-      if (!resultPlan && !departure.currentLocation && from && from.id !== to.id) {
+      if (!resultPlan && !coordinateSearch && from && to && from.id !== to.id) {
         result = await subwayAt(from, to, selectedPreference, controller.signal);
         if (!result?.official && result) setRouteError('공식 시간표를 확인하지 못해 임시 예상값으로 안내해요.');
-        if (result && arrival.currentLocation) {
-          resultPlan = withDestinationWalk({ ...createJourneyPlan(result),
-            arrivalAt: result.official?.arrivalAt, departureAt: result.official?.departureAt }, arrival);
-        }
       }
-      if (!result && !resultPlan) setRouteError('이 위치에서 연결할 경로를 찾지 못했어요. 출발역을 직접 선택하거나 위치를 새로 확인해주세요.');
+      if (!result && !resultPlan) setRouteError('이 장소에서 연결할 경로를 찾지 못했어요. 지원하는 역 주변의 장소나 다른 출발지를 선택해주세요.');
     } catch (error) {
       if (!controller.signal.aborted) setRouteError(error instanceof Error ? error.message : '경로를 확인하지 못했어요. 다시 검색해주세요.');
     }
@@ -325,7 +314,7 @@ export default function HomeScreen() {
   }
 
   async function reconnectAfterSelection(leg: RideLeg, candidate: LiveCandidate, status: SelectedRide['status']) {
-    const context = gunpoSearch.current;
+    const context = connectionSearch.current;
     if (!context || candidate.mode !== 'BUS' || !leg.routeId || leg.from.serviceSequence === null || leg.to.serviceSequence === null) return;
     const fetchedAt = candidate.evidence[0]?.fetchedAt;
     if (!fetchedAt || Date.now() - Date.parse(fetchedAt) > 90_000) throw new Error('버스 위치가 오래됐어요. 새로고침한 뒤 선택해주세요.');
@@ -343,13 +332,16 @@ export default function HomeScreen() {
     reconnectRequest.current = controller;
     setReconnecting(true);
     try {
-      const nextPlan = await findGunpoJourney({ ...context, departureAt: new Date().toISOString(),
+      const options = { departureAt: new Date().toISOString(),
         signal: controller.signal, fixedBus, getSubwayRoute: subwayAt,
-        rideSeconds: estimateGunpoRideSeconds, stationCoordinates: stationLocationData.points });
+        rideSeconds: estimateGunpoRideSeconds, stationCoordinates: stationLocationData.points };
+      const nextPlan = context.mode === 'places'
+        ? await findPlaceJourney({ ...context.query, ...options })
+        : await findGunpoJourney({ ...context.query, ...options });
       if (controller.signal.aborted || reconnectRequest.current !== controller) return;
       if (!nextPlan) throw new Error('선택한 버스로 이어지는 경로를 확인하지 못했어요. 위치를 새로고침하거나 다른 차량을 선택해주세요.');
-      setJourneyPlan(withDestinationWalk({ ...nextPlan, notes: [...(nextPlan.notes ?? []),
-        '선택한 버스 위치와 추정 이동시간으로 이후 지하철 연결을 다시 계산했어요.'] }, arrival));
+      setJourneyPlan({ ...nextPlan, notes: [...(nextPlan.notes ?? []),
+        '선택한 버스 위치와 추정 이동시간으로 이후 지하철 연결을 다시 계산했어요.'] });
     } catch (error) {
       if (controller.signal.aborted || reconnectRequest.current !== controller) return;
       throw error;
@@ -393,7 +385,7 @@ export default function HomeScreen() {
           <View style={styles.intro}>
             <Text style={ui.eyebrow}>YOUR NEXT STOP, A LITTLE MORE COMFORTABLE</Text>
             <Text accessibilityRole="header" style={styles.title}>내릴 걱정은 내려놓고,{'\n'}편하게 가요.</Text>
-            <Text style={ui.muted}>역을 검색하거나 내 위치에서 시작해보세요.</Text>
+            <Text style={ui.muted}>역·학교·아파트·주소를 검색하거나 내 위치에서 시작해보세요.</Text>
           </View>
           <View onLayout={(event) => { searchLayout.current.cardTop = event.nativeEvent.layout.y; }} style={[ui.card, styles.searchCard]}>
             <View style={ui.spread}>
@@ -411,7 +403,7 @@ export default function HomeScreen() {
               </View>
               <View style={styles.swapRow}>
                 <View style={styles.connector} />
-                <Pressable accessibilityRole="button" accessibilityLabel="출발역과 도착역 바꾸기" onPress={swapStations} style={styles.swap}>
+                <Pressable accessibilityRole="button" accessibilityLabel="출발지와 도착지 바꾸기" onPress={swapStations} style={styles.swap}>
                   <Text style={styles.swapText}>↕ 출발·도착 바꾸기</Text>
                 </Pressable>
               </View>
@@ -419,11 +411,11 @@ export default function HomeScreen() {
                 <StationSearchField label="도착역" value={arrival} onChange={(value) => updateField('arrival', value)} active={activeField === 'arrival'} onFocus={() => focusField('arrival')} onBlur={() => blurField('arrival')} onSelect={finishEditing} resultsMaxHeight={resultsMaxHeight} {...locationProps('arrival')} />
               </View>
             </View>
-            {(departure.currentLocation || arrival.currentLocation) && <View style={{ gap: 5 }}>
-              <Text style={ui.muted}>{includeGunpoBuses ? '내 위치 주변 정류장과 역을 비교해요. 버스·도보 시간은 거리 기반 추정이며 실제 길과 다를 수 있어요.' : '내 위치에서 역까지 걷는 시간을 추정해 지하철에 연결해요.'}</Text>
+            {hasCoordinateEndpoint && <View style={{ gap: 5 }}>
+              <Text style={ui.muted}>{includeGunpoBuses ? '출발지 주변 정류장·역과 목적지 주변 역을 비교해요. 버스·도보 시간은 거리 기반 추정이며 실제 길과 다를 수 있어요.' : '장소와 역 사이의 도보 시간을 포함해 지하철 경로를 비교해요. 실제 보행 경로·출입구 안내는 제공하지 않아요.'}</Text>
               <Text style={styles.locationSource}>역 위치 정보: 서울특별시 · 서울시 역사마스터 정보</Text>
             </View>}
-            {sameStation && !departure.currentLocation && <Text accessibilityRole="alert" style={styles.validation}>출발역과 내릴 역을 다르게 선택해주세요.</Text>}
+            {sameStation && <Text accessibilityRole="alert" style={styles.validation}>출발역과 내릴 역을 다르게 선택해주세요.</Text>}
             {routeError && <Text accessibilityRole="alert" style={ui.muted}>{routeError}</Text>}
             <Action onPress={() => void searchRoute()} disabled={!canSearch || routeLoading}>
               {routeLoading ? '경로 확인 중…' : '경로 찾기　→'}
@@ -435,32 +427,25 @@ export default function HomeScreen() {
           <View style={styles.sectionHeading}>
             <Text style={ui.eyebrow}>MY JOURNEY</Text>
             <Text accessibilityRole="header" style={styles.sectionTitle}>내 여정</Text>
-            {hasJourney && <Text style={ui.muted}>{departure.currentLocation ? '내 위치' : departure.station?.name} → {arrival.currentLocation ? '내 위치' : arrival.station?.name}</Text>}
+            {hasJourney && <Text style={ui.muted}>{endpointName(departure)} → {endpointName(arrival)}</Text>}
             {reconnecting && <Text accessibilityLiveRegion="polite" style={ui.muted}>선택한 버스에 맞춰 이후 지하철을 다시 확인하고 있어요…</Text>}
           </View>
           {!hasJourney && <View style={[ui.card, styles.emptyState]}>
             <TrainIcon size={38} />
             <Text style={ui.heading}>{routeLoading ? '경로를 다시 확인하고 있어요' : '아직 선택한 여정이 없어요'}</Text>
-            <Text style={ui.muted}>출발역과 내릴 역을 고르면 여기에 경로가 표시돼요.</Text>
+            <Text style={ui.muted}>출발지와 목적지를 고르면 여기에 경로가 표시돼요.</Text>
             {!routeLoading && <Action secondary onPress={() => selectTab('search')}>길찾기</Action>}
           </View>}
         </>}
 
         {hasJourney && <View style={tab === 'route' ? undefined : styles.hidden}>
-          {!journeyPlan && (departure.currentLocation || arrival.currentLocation) && <View style={[ui.card, styles.locationConnection]}>
-            <Text style={styles.connectionTitle}>내 위치 연결</Text>
-            {departure.currentLocation && <Text style={ui.text}>내 위치 → {departure.station?.name} · 직선 약 {formatNearbyDistance(departure.currentLocation.distanceMeters)}</Text>}
-            {arrival.currentLocation && <Text style={ui.text}>{arrival.station?.name} → 내 위치 · 직선 약 {formatNearbyDistance(arrival.currentLocation.distanceMeters)}</Text>}
-            <Text style={ui.muted}>아래 시간은 지하철 구간 기준이에요. 역과 내 위치 사이의 도보 경로·시간은 포함되지 않아요.</Text>
-            <Text style={styles.locationSource}>역 위치 정보: 서울특별시 · 서울시 역사마스터 정보</Text>
-          </View>}
           <RouteResultScreen
             {...(journeyPlan ? { plan: journeyPlan } : { route: route! })}
             journeyKey={journeyKey}
             onRideSelected={reconnectAfterSelection}
             stopsBefore={stopsBefore}
             preference={preference}
-            onPreference={(value) => { setPreference(value); void searchRoute(departure.station, arrival.station, value); }}
+            onPreference={(value) => { setPreference(value); void searchRoute(value); }}
           />
         </View>}
 
@@ -521,8 +506,6 @@ const styles = StyleSheet.create({
   sectionHeading: { gap: 7, paddingHorizontal: 2 },
   sectionTitle: { fontSize: 28, fontWeight: '700', letterSpacing: -1, color: palette.ink },
   emptyState: { alignItems: 'center', paddingVertical: 38, gap: 14 },
-  locationConnection: { gap: 7, marginBottom: 16 },
   locationSource: { fontSize: 10, lineHeight: 16, color: palette.muted },
-  connectionTitle: { fontSize: 14, fontWeight: '700', color: palette.green },
   hidden: { display: 'none' },
 });

@@ -67,10 +67,16 @@ export type GunpoJourneyQuery = Readonly<{
     latitude?: number;
     longitude?: number;
     name?: string;
+    /** Place/GPS endpoint identity, separate from the rail connection station. */
+    endpointId?: string;
     stationId?: string;
+    /** A station origin boards rail here; buses may connect to another rail station. */
+    directStationId?: string;
     /** Explicitly selected rail connection; stationId may only be an automatic nearest-station hint. */
     connectionStationId?: string;
     isCurrentLocation?: boolean;
+    /** Walking from a geographic endpoint includes platform access. */
+    requiresPlatformAccess?: boolean;
   }>;
   destination: Station;
   network: GunpoNetwork;
@@ -329,7 +335,9 @@ export async function findGunpoJourney(query: GunpoJourneyQuery): Promise<Journe
   const searchMs = instant(query.departureAt);
   if (!query.destination || !validText(query.destination.id) ||
     !['fastest', 'fewest-transfers'].includes(query.preference ?? 'fastest') ||
-    (query.origin.connectionStationId !== undefined && !validText(query.origin.connectionStationId))) {
+    (query.origin.connectionStationId !== undefined && !validText(query.origin.connectionStationId)) ||
+    (query.origin.directStationId !== undefined && !validText(query.origin.directStationId)) ||
+    (query.origin.endpointId !== undefined && !validText(query.origin.endpointId))) {
     throw new Error('GUNPO_INVALID_QUERY');
   }
   const { patterns, costs } = checkedNetwork(query.network);
@@ -340,14 +348,15 @@ export async function findGunpoJourney(query: GunpoJourneyQuery): Promise<Journe
     : { latitude: query.origin.latitude!, longitude: query.origin.longitude! };
   if (!originPoint || !isCoordinate(originPoint)) throw new Error('GUNPO_INVALID_ORIGIN');
   const originName = query.origin.name ?? (query.origin.stationId ? getStation(query.origin.stationId)?.name : null) ?? '내 위치';
-  const originId = query.origin.stationId ?? `gps:${JSON.stringify([originPoint.latitude, originPoint.longitude])}`;
+  const originId = query.origin.endpointId ?? query.origin.stationId ?? `gps:${JSON.stringify([originPoint.latitude, originPoint.longitude])}`;
   const connectionStationId = query.origin.connectionStationId;
+  const directStationId = connectionStationId ?? query.origin.directStationId;
   const stations = ALLOWED_STATION_IDS.filter(id => !connectionStationId || id === connectionStationId).flatMap(id => {
     const station = getStation(id);
     return station && coordinates.has(id) ? [{ station, points: coordinates.get(id)! }] : [];
   });
   const directStations = [...coordinates].flatMap(([id, points]) => {
-    if (connectionStationId && id !== connectionStationId) return [];
+    if (directStationId && id !== directStationId) return [];
     const station = getStation(id);
     const distance = nearestDistance(originPoint, points);
     return station && distance !== null && distance <= DIRECT_WALK_LIMIT_METERS
@@ -359,9 +368,9 @@ export async function findGunpoJourney(query: GunpoJourneyQuery): Promise<Journe
     fixed.alightSequence <= fixed.boardSequence)) throw new Error('GUNPO_INVALID_FIXED_BUS');
   const access: Access[] = [];
   if (!fixed) for (const target of directStations) {
-    const isCurrentLocation = query.origin.isCurrentLocation ??
+    const requiresPlatformAccess = query.origin.requiresPlatformAccess ?? query.origin.isCurrentLocation ??
       (query.origin.latitude !== undefined && query.origin.longitude !== undefined);
-    const platformSeconds = isCurrentLocation && target.station.id !== query.destination.id ? RAIL_PLATFORM_SECONDS : 0;
+    const platformSeconds = requiresPlatformAccess && target.station.id !== query.destination.id ? RAIL_PLATFORM_SECONDS : 0;
     const duration = walkSeconds(target.distance) + platformSeconds;
     const readyMs = searchMs + duration * 1000;
     access.push({ station: target.station, readyMs, transferCount: 0, basis: 'DIRECT', buildLegs: () => {

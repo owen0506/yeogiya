@@ -9,6 +9,7 @@ import { handleBenchmarkRoute } from './routing/benchmark-endpoint.mjs';
 import { createTagoBusClient } from './tago-bus-client.mjs';
 import { normalizeTagoBusResponse } from './tago-bus-model.mjs';
 import { createGunpoBusService, gunpoCityCode } from './gunpo-bus.mjs';
+import { fetchPlaceSearch, placeSearchError } from './kakao-places.mjs';
 
 // 사용자가 이미 프런트엔드 .env에 저장한 비공개 키도 서버에서만 읽습니다.
 const readEnv = (path) => { try { return parseEnv(readFileSync(new URL(path, import.meta.url), 'utf8')); } catch { return {}; } };
@@ -102,6 +103,13 @@ export const server = createServer(async (req, res) => {
   if (req.headers.origin && req.headers.origin !== origin) return reply(403, { error: 'ORIGIN_NOT_ALLOWED' });
   if (req.method !== 'GET') return reply(405, { error: 'METHOD_NOT_ALLOWED' });
   const url = new URL(req.url, 'http://localhost');
+  if (url.pathname === '/places/search') {
+    try { return reply(200, await fetchPlaceSearch(url.searchParams, env)); }
+    catch (error) {
+      const [status, code] = placeSearchError(error);
+      return reply(status, { error: code });
+    }
+  }
   if (url.pathname === '/gunpo-bus-network') {
     if ([...url.searchParams].length) return reply(400, { error: 'INVALID_QUERY' });
     return reply(200, gunpoBus.getNetwork());

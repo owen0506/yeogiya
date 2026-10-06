@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Linking, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { StationLines, palette, ui } from '../journey/journey-ui';
 import { searchStations, type StationFieldValue } from './stations';
 import { formatNearbyDistance } from './nearby-stations';
+import { usePlaceSearch } from '../places/use-place-search';
 
 type Props = {
   label: string; value: StationFieldValue; active: boolean; onFocus: () => void; onBlur?: () => void;
@@ -19,8 +20,10 @@ export function StationSearchField({ label, value, active, onFocus, onBlur, onCh
   useEffect(() => { if (!active) inputRef.current?.blur(); }, [active]);
   useEffect(() => { resultsRef.current?.scrollTo({ y: 0, animated: false }); }, [value.query]);
   useEffect(() => { setShowNearby(false); }, [value.currentLocation?.observedAt]);
-  const results = active && !value.station && !value.currentLocation ? searchStations(value.query) : [];
-  const destination = label === '도착역';
+  const searching = active && !value.station && !value.currentLocation && !value.place;
+  const results = searching ? searchStations(value.query) : [];
+  const placeSearch = usePlaceSearch(value.query, searching);
+  const destination = label === '도착역' || label === '도착지';
   const endpointLabel = destination ? '도착지' : '출발지';
   return <View style={{ gap: 8 }}>
     <View style={[styles.field, active && { borderColor: palette.green, backgroundColor: '#FFF' }]}>
@@ -35,12 +38,13 @@ export function StationSearchField({ label, value, active, onFocus, onBlur, onCh
       </View>
       <View style={styles.inputRow}>
         <View style={[styles.dot, destination && { backgroundColor: palette.green }]} />
-        <TextInput ref={inputRef} accessibilityLabel={`${label} 검색`} value={value.query} onFocus={onFocus} onBlur={onBlur} onChangeText={(query) => onChange({ query, station: null })} placeholder={destination ? '목적지 역 또는 내 위치' : '출발역 또는 내 위치'} placeholderTextColor="#9AA49E" autoCorrect={false} selectTextOnFocus={!!value.currentLocation} maxLength={50} returnKeyType="done" style={styles.input} />
-        {value.station && !value.currentLocation && <StationLines lines={value.station.lines} small />}
+        <TextInput ref={inputRef} accessibilityLabel={`${endpointLabel} 역, 장소, 주소 검색`} value={value.query} onFocus={onFocus} onBlur={onBlur} onChangeText={(query) => onChange({ query, station: null })} placeholder={destination ? '역, 학교, 아파트 또는 주소' : '역, 장소 또는 내 위치'} placeholderTextColor="#9AA49E" autoCorrect={false} selectTextOnFocus={!!value.currentLocation || !!value.place} maxLength={100} returnKeyType="done" style={styles.input} />
+        {value.station && !value.currentLocation && !value.place && <StationLines lines={value.station.lines} small />}
         {!!value.query && <Pressable accessibilityRole="button" accessibilityLabel={`${label} 지우기`} onPress={() => { onChange({ query: '', station: null }); inputRef.current?.focus(); }} style={styles.clear}><Text style={{ fontSize: 19, color: '#9AA49E' }}>×</Text></Pressable>}
       </View>
+      {value.place && <Text style={[ui.muted, { paddingLeft: 20, paddingBottom: 5 }]}>{value.place.address}</Text>}
       {value.currentLocation && value.station && <View style={styles.locationSummary}>
-        <Text style={[ui.muted, { flex: 1 }]}>{!destination && !value.currentLocation.connectionStationSelected ? '가까운 역 ' : ''}{value.station.name}{destination || value.currentLocation.connectionStationSelected ? ' 연결' : ''} · 직선 약 {formatNearbyDistance(value.currentLocation.distanceMeters)}</Text>
+        <Text style={[ui.muted, { flex: 1 }]}>{!value.currentLocation.connectionStationSelected ? '가까운 역 ' : ''}{value.station.name}{value.currentLocation.connectionStationSelected ? ' 연결' : ''} · 직선 약 {formatNearbyDistance(value.currentLocation.distanceMeters)}</Text>
         {!!value.nearbyStations?.length && <Pressable accessibilityRole="button" accessibilityLabel={`${endpointLabel} 주변 연결 역 변경`} accessibilityState={{ expanded: showNearby }} onPress={() => { onSelect(); setShowNearby(!showNearby); }} style={styles.changeStation}>
           <Text style={styles.locationButtonText}>{showNearby ? '접기' : '역 변경'}</Text>
         </Pressable>}
@@ -63,10 +67,23 @@ export function StationSearchField({ label, value, active, onFocus, onBlur, onCh
         <StationLines lines={station.lines} small />
       </Pressable>)}
     </View>}
-    {active && !value.station && !value.currentLocation && !!value.query.trim() && <ScrollView ref={resultsRef} style={[styles.results, { maxHeight: resultsMaxHeight }]} contentContainerStyle={styles.resultsContent} nestedScrollEnabled keyboardShouldPersistTaps="handled" keyboardDismissMode="none">
-      <Text accessibilityLiveRegion="polite" style={ui.muted}>{results.length ? '환승역은 하나로 모아 보여드려요' : '검색 결과가 없어요. 다른 이름을 입력해보세요.'}</Text>
+    {searching && !!value.query.trim() && <ScrollView ref={resultsRef} style={[styles.results, { maxHeight: resultsMaxHeight }]} contentContainerStyle={styles.resultsContent} nestedScrollEnabled keyboardShouldPersistTaps="handled" keyboardDismissMode="none">
+      {!!results.length && <Text style={styles.sectionLabel}>지하철역</Text>}
       {results.slice(0, 10).map((station) => <Pressable key={station.id} accessibilityRole="button" accessibilityLabel={`${label}으로 ${station.name} ${station.lines.join('·')} 선택`} onPress={() => { onChange({ query: station.name, station }); onSelect(); }} style={({ pressed }) => [styles.result, pressed && { backgroundColor: palette.tint }]}><Text style={[ui.text, { flex: 1 }]}>{station.name}</Text><StationLines lines={station.lines} small /></Pressable>)}
       {results.length > 10 && <Text style={ui.muted}>역 이름을 더 입력하면 검색 범위를 좁힐 수 있어요.</Text>}
+      <Text style={styles.sectionLabel}>장소 · 주소</Text>
+      {value.query.trim().length < 2 && <Text style={ui.muted}>장소 이름이나 주소를 두 글자 이상 입력해주세요.</Text>}
+      {placeSearch.loading && <View style={styles.searchFeedback}><ActivityIndicator size="small" color={palette.green} /><Text accessibilityLiveRegion="polite" style={ui.muted}>장소를 찾고 있어요.</Text></View>}
+      {placeSearch.error && <View style={{ gap: 3 }}><Text accessibilityRole="alert" style={styles.error}>{placeSearch.error}</Text><Pressable accessibilityRole="button" onPress={placeSearch.retry} style={styles.retry}><Text style={styles.locationButtonText}>다시 검색</Text></Pressable></View>}
+      {value.query.trim().length >= 2 && !placeSearch.loading && !placeSearch.error && !placeSearch.places.length && <Text accessibilityLiveRegion="polite" style={ui.muted}>장소 검색 결과가 없어요. 이름이나 주소를 더 입력해보세요.</Text>}
+      {placeSearch.places.map(place => <Pressable key={`${place.kind}:${place.providerPlaceId}`} accessibilityRole="button"
+        accessibilityLabel={`${endpointLabel}로 ${place.name}, ${place.address} 선택`}
+        onPress={() => { onChange({ query: place.name, station: null, place }); onSelect(); }}
+        style={({ pressed }) => [styles.result, styles.placeResult, pressed && { backgroundColor: palette.tint }]}>
+        <View style={{ flex: 1, gap: 4 }}><Text style={ui.text}>{place.name}</Text><Text style={ui.muted}>{place.address}</Text></View>
+        <Text style={styles.placeKind}>{place.kind === 'ADDRESS' ? '주소' : '장소'}</Text>
+      </Pressable>)}
+      <Pressable accessibilityRole="link" accessibilityLabel="카카오 장소 검색 제공 안내 열기" onPress={() => { void Linking.openURL('https://developers.kakao.com/docs/ko/local/dev-guide').catch(() => {}); }} style={styles.source}><Text style={styles.sourceText}>장소 검색 제공 · Kakao</Text></Pressable>
     </ScrollView>}
   </View>;
 }
@@ -91,4 +108,11 @@ const styles = StyleSheet.create({
   results: { borderWidth: 1, borderColor: palette.border, borderRadius: 12, backgroundColor: '#FFF', flexGrow: 0 },
   resultsContent: { padding: 12, gap: 4 },
   result: { minHeight: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6, borderBottomWidth: 1, borderBottomColor: '#F0F3F0', gap: 8 },
+  sectionLabel: { fontSize: 11, fontWeight: '700', color: palette.green, marginTop: 7, marginBottom: 2 },
+  placeResult: { minHeight: 64, paddingVertical: 10 },
+  placeKind: { fontSize: 10, color: palette.muted, backgroundColor: '#F0F5F0', paddingHorizontal: 7, paddingVertical: 4, borderRadius: 6 },
+  searchFeedback: { minHeight: 36, flexDirection: 'row', alignItems: 'center', gap: 8 },
+  retry: { minHeight: 44, justifyContent: 'center', alignSelf: 'flex-start', paddingHorizontal: 6 },
+  source: { minHeight: 44, justifyContent: 'center', alignSelf: 'flex-end' },
+  sourceText: { fontSize: 10, color: palette.muted },
 });

@@ -1,4 +1,5 @@
 import { interchangeName, networkSegments, stationAliases } from './network';
+import type { Place } from '../places/types';
 
 export type Station = {
   id: string;
@@ -106,6 +107,7 @@ export type NearbyStation = Readonly<{ station: Station; distanceMeters: number 
 export type StationFieldValue = {
   query: string;
   station: Station | null;
+  place?: Place;
   currentLocation?: StationFieldLocation;
   nearbyStations?: readonly NearbyStation[];
 };

@@ -34,7 +34,7 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
-    "test": "node --test scripts/test-core.cjs scripts/test-journey-engine.cjs scripts/test-timetable-engine.cjs scripts/test-timetable-plan.cjs scripts/test-average-route-engine.cjs scripts/test-bus-vehicles.cjs scripts/test-alarm-context.cjs scripts/test-vehicle-motion.cjs scripts/test-subway-vehicles.cjs scripts/test-current-location.cjs scripts/test-nearby-stations.cjs scripts/test-gunpo-routing.cjs scripts/test-gunpo-service.cjs",
+    "test": "node --test scripts/test-core.cjs scripts/test-journey-engine.cjs scripts/test-timetable-engine.cjs scripts/test-timetable-plan.cjs scripts/test-average-route-engine.cjs scripts/test-bus-vehicles.cjs scripts/test-alarm-context.cjs scripts/test-vehicle-motion.cjs scripts/test-subway-vehicles.cjs scripts/test-current-location.cjs scripts/test-nearby-stations.cjs scripts/test-gunpo-routing.cjs scripts/test-gunpo-service.cjs scripts/test-place-service.cjs scripts/test-place-routing.cjs",
     "typecheck": "tsc --noEmit",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
